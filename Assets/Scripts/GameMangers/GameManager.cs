@@ -18,6 +18,13 @@ public class GameManager : MonoBehaviour
     public UnityEvent<int> OnWaveChanged;
     public UnityEvent OnGameOver;
 
+    // --- Add for time scale ---
+    [Header("Game Speed")]
+    [SerializeField] private float[] gameSpeeds = { 1f, 2f, 4f };
+    private int currentSpeedIndex = 0;
+    public UnityEvent<float> OnGameSpeedChanged;
+    // --------------------------
+
     private void Awake()
     {
         if (Instance == null)
@@ -32,6 +39,9 @@ public class GameManager : MonoBehaviour
 
         currentMoney = startingMoney;
         currentLives = startingLives;
+
+        // Set default game speed
+        SetGameSpeed(0);
     }
 
     private void Start()
@@ -80,7 +90,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over!");
     }
 
-
     public int GetWave()
     {
         return currentWave;
@@ -93,5 +102,21 @@ public class GameManager : MonoBehaviour
     public int GetLives()
     {
         return currentLives;
+    }
+
+    // --- Game Speed Methods ---
+    public void SetGameSpeed(int speedIndex)
+    {
+        if (speedIndex < 0 || speedIndex >= gameSpeeds.Length)
+            return;
+
+        currentSpeedIndex = speedIndex;
+        Time.timeScale = gameSpeeds[speedIndex];
+        OnGameSpeedChanged?.Invoke(gameSpeeds[speedIndex]);
+    }
+
+    public float GetCurrentGameSpeed()
+    {
+        return gameSpeeds[currentSpeedIndex];
     }
 }
