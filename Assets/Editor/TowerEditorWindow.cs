@@ -1,5 +1,7 @@
 using Mono.Cecil.Cil;
 using System;
+using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -189,6 +191,76 @@ public class TowerEditorWindow : EditorWindow
                 }
 #endif
                 AssetDatabase.SaveAssets(); // Optional: force save
+            }
+
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Export Tower Stats to Text File"))
+            {
+                string savePath = EditorUtility.SaveFilePanel(
+                    "Save Tower Stats",
+                    Application.dataPath,
+                    selectedTower.name + "_Stats.txt",
+                    "txt"
+                );
+                if (!string.IsNullOrEmpty(savePath))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"Tower: {selectedTower.name}");
+                    sb.AppendLine($"Range: {selectedTower.GetRange()}");
+                    sb.AppendLine($"Fire Rate: {towerType.GetField("baseFireRate", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower)}");
+                    sb.AppendLine($"Damage: {towerType.GetField("damage", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower)}");
+                    sb.AppendLine($"Cost: {selectedTower.GetCost()}");
+                    sb.AppendLine($"Spread Angle: {towerType.GetField("spreadAngle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower)}");
+                    sb.AppendLine($"Projectiles Per Shot: {towerType.GetField("projectilesPerShotBonus", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower)}");
+                    sb.AppendLine($"Projectile Size Bonus: {towerType.GetField("projectileSizeBonus", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower)}");
+
+                    // Base projectile effects
+                    if (baseProjectileEffects != null && baseProjectileEffects.Count > 0)
+                    {
+                        sb.AppendLine("Base Projectile Effects:");
+                        foreach (var effect in baseProjectileEffects)
+                            sb.AppendLine($"  - {effect}");
+                    }
+
+                    sb.AppendLine();
+                    sb.AppendLine("Upgrade Paths:");
+                    for (int i = 0; i < selectedTower.upgradePaths.Length; i++)
+                    {
+                        var upgradePath = selectedTower.upgradePaths[i];
+                        sb.AppendLine($"Path {i + 1}:");
+                        if (upgradePath != null && upgradePath.upgrades != null)
+                        {
+                            for (int j = 0; j < upgradePath.upgrades.Length; j++)
+                            {
+                                var upgrade = upgradePath.upgrades[j];
+                                if (upgrade != null)
+                                {
+                                    sb.AppendLine($"  Tier {j + 1}:");
+                                    sb.AppendLine($"    Name: {upgrade.upgradeName}");
+                                    sb.AppendLine($"    Description: {upgrade.description}");
+                                    sb.AppendLine($"    Cost: {upgrade.cost}");
+                                    sb.AppendLine($"    Range Bonus: {upgrade.rangeBonus}");
+                                    sb.AppendLine($"    Fire Rate Bonus: {upgrade.fireRateBonus}");
+                                    sb.AppendLine($"    Damage Bonus: {upgrade.damageBonus}");
+                                    sb.AppendLine($"    Projectiles Per Shot Bonus: {upgrade.projectilesPerShotBonus}");
+                                    sb.AppendLine($"    Spread Angle Bonus: {upgrade.spreadAngleBonus}");
+                                    sb.AppendLine($"    Projectile Size Bonus: {upgrade.projectileSizeBonus}");
+                                    sb.AppendLine($"    Pierce Bonus: {upgrade.pierceBonus}");
+                                    if (upgrade.projectileEffects != null && upgrade.projectileEffects.Count > 0)
+                                    {
+                                        sb.AppendLine("    Projectile Effects:");
+                                        foreach (var effect in upgrade.projectileEffects)
+                                            sb.AppendLine($"      - {effect}");
+                                    }
+                                }
+                            }
+                        }
+                        sb.AppendLine();
+                    }
+
+                    File.WriteAllText(savePath, sb.ToString());
+                    EditorUtility.RevealInFinder(savePath);
+                }
             }
         }
         finally

@@ -31,8 +31,7 @@ public class TowerSelector : MonoBehaviour
         {
             Vector2 mousePos = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Collider2D hit = Physics2D.OverlapPoint(mousePos, towerLayerMask);
-            Debug.Log("Mouse clicked at: " + mousePos);
-            Debug.Log("Hit collider: " + (hit != null ? hit.name : "None"));
+            
 
             if (hit != null)
             {

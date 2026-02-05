@@ -17,10 +17,18 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float waveLinearScale = 2.5f;
     [SerializeField] private float waveQuadraticScale = 0.15f;
 
+    [Header("Tutorial")]
+    [SerializeField] private bool enableTutorial = true;
+    [SerializeField] private TutorialPopup tutorialPopupPrefab;
+
+    private SaveData saveData;
 
     private int currentWave = 0;
     private bool waveInProgress = false;
     private int enemiesAlive = 0;
+
+    // Track which enemy types have been seen
+    private HashSet<string> seenEnemyTypes = new HashSet<string>();
 
     private void Awake()
     {
@@ -33,6 +41,13 @@ public class WaveManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        // Find SaveData in the scene
+        saveData = FindFirstObjectByType<SaveData>();
+        if (saveData != null && saveData.LoadTutorialCompleted())
+        {
+            enableTutorial = false;
         }
 
         enemyPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemy").ToList();
@@ -53,7 +68,7 @@ public class WaveManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBetweenWaves);
 
-        while (true)
+        while (!GameManager.Instance.IsGameOver)
         {
             currentWave++;
             waveInProgress = true;
@@ -78,6 +93,7 @@ public class WaveManager : MonoBehaviour
 
             yield return new WaitForSeconds(timeBetweenWaves);
         }
+
     }
 
     // Wave points formula
@@ -89,9 +105,9 @@ public class WaveManager : MonoBehaviour
     // Tier mixing ratios
     private Dictionary<EnemyTier, float> GetTierRatios(int wave)
     {
-        if (wave < 5)
-            return new() { { EnemyTier.Baby, 1f } };
         if (wave < 10)
+            return new() { { EnemyTier.Baby, 1f } };
+        if (wave < 25)
             return new() { { EnemyTier.Baby, 0.9f }, { EnemyTier.Weak, 0.1f } };
         if (wave < 30)
             return new() { { EnemyTier.Baby, 0.3f }, { EnemyTier.Weak, 0.4f }, { EnemyTier.Mid, 0.3f } };
@@ -108,11 +124,10 @@ public class WaveManager : MonoBehaviour
         float points = GetWavePoints(wave);
         Debug.Log($"Generating wave {wave} with {points} points");
         var ratios = GetTierRatios(wave);
-        Debug.Log($"Tier Ratios: {string.Join(", ", ratios.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
 
-        // Group prefabs by tier
+        // Group prefabs by tier, but only for tiers in ratios
         Dictionary<EnemyTier, List<GameObject>> tierPrefabs = new();
-        foreach (EnemyTier tier in System.Enum.GetValues(typeof(EnemyTier)))
+        foreach (var tier in ratios.Keys)
         {
             tierPrefabs[tier] = enemyPrefabs
                 .Where(p =>
@@ -173,16 +188,82 @@ public class WaveManager : MonoBehaviour
         foreach (var prefab in waveEnemies)
         {
             Vector3 spawnPos = PathManager.Instance != null ? PathManager.Instance.GetWaypoint(0) : Vector3.zero;
+
+            // Tutorial: Check for new enemy type
+            if (enableTutorial)
+            {
+                string enemyType = prefab.name;
+                if (!seenEnemyTypes.Contains(enemyType))
+                {
+                    seenEnemyTypes.Add(enemyType);
+                    yield return StartCoroutine(ShowTutorialForEnemy(prefab));
+                }
+            }
+
+            // Inside SpawnWave, after showing tutorial for a new enemy type
+            if (enableTutorial)
+            {
+                string enemyType = prefab.name;
+                if (!seenEnemyTypes.Contains(enemyType))
+                {
+                    seenEnemyTypes.Add(enemyType);
+                    yield return StartCoroutine(ShowTutorialForEnemy(prefab));
+
+                    // Check if all enemy types have been seen
+                    if (seenEnemyTypes.Count == enemyPrefabs.Count)
+                    {
+                        if (saveData != null)
+                        {
+                            saveData.SaveTutorialCompleted(true);
+                        }
+                    }
+                }
+            }
+
             Instantiate(prefab, spawnPos, Quaternion.identity);
             enemiesAlive++;
 
-            // Log the cost of each enemy spawned
-            var enemy = prefab.GetComponent<Enemy>();
-            int cost = enemy != null ? enemy.Cost : 1;
-            Debug.Log($"Spawned enemy: {prefab.name}, Cost: {cost}");
-
             yield return new WaitForSeconds(timeBetweenEnemies);
         }
+    }
+
+    // Show tutorial popup and pause game
+    private IEnumerator ShowTutorialForEnemy(GameObject enemyPrefab)
+    {
+       GameManager.Instance.PauseGame();
+
+        TutorialPopup popup = null;
+        if (tutorialPopupPrefab != null)
+        {
+            popup = Instantiate(tutorialPopupPrefab);
+            popup.SetEnemyInfo(enemyPrefab);
+            popup.Show();
+        }
+        else
+        {
+            Debug.LogWarning("TutorialPopupPrefab not assigned in WaveManager.");
+        }
+
+        // Wait for player to close popup
+        bool closed = false;
+        if (popup != null)
+        {
+            popup.OnClosed += () => closed = true;
+            while (!closed)
+            {
+                yield return null;
+            }
+        }
+        else
+        {
+            // Fallback: wait for any key
+            while (!Input.anyKeyDown)
+            {
+                yield return null;
+            }
+        }
+
+      GameManager.Instance.ResumeGame();
     }
 
     // Call this method from the Enemy script when an enemy dies

@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
     {
         sizeMultiplier = size;
         transform.localScale = Vector3.one * sizeMultiplier;
-        Debug.Log($"Projectile size set to {sizeMultiplier}");
+       // Debug.Log($"Projectile size set to {sizeMultiplier}");
     }
 
     public void SetProjectileEffects(IEnumerable<ProjectileEffectType> effects)

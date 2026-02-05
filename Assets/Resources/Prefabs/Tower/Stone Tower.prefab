@@ -184,26 +184,26 @@ MonoBehaviour:
       description: Boulders become denser, increasing impact damage.
       cost: 120
       icon: {fileID: 0}
-      rangeBonus: 0
+      rangeBonus: 0.5
       fireRateBonus: 0
       damageBonus: 1
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0.2
-      projectileEffects: 00000000
+      projectileEffects: 02000000
       projectileSprite: {fileID: 0}
       pierceBonus: 0
     - upgradeName: Dense Boulder
       description: Stronger rock cores deal increased damage and pierce one enemy.
       cost: 300
       icon: {fileID: 0}
-      rangeBonus: 0
+      rangeBonus: 0.5
       fireRateBonus: 0
       damageBonus: 2
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0.3
-      projectileEffects: 0400000000000000
+      projectileEffects: 040000000000000002000000
       projectileSprite: {fileID: 0}
       pierceBonus: 1
     - upgradeName: Armor Break
@@ -216,7 +216,7 @@ MonoBehaviour:
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0.1
-      projectileEffects: 02000000
+      projectileEffects: 0200000004000000
       projectileSprite: {fileID: 0}
       pierceBonus: 2
     - upgradeName: Mountain Boulder
@@ -229,7 +229,7 @@ MonoBehaviour:
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0.3
-      projectileEffects: 0300000001000000
+      projectileEffects: 030000000100000004000000
       projectileSprite: {fileID: 0}
       pierceBonus: 2
   - upgrades:
@@ -237,7 +237,7 @@ MonoBehaviour:
       description: Each cast throws an additional small stone.
       cost: 100
       icon: {fileID: 0}
-      rangeBonus: 0
+      rangeBonus: 0.5
       fireRateBonus: 0
       damageBonus: 0
       projectilesPerShotBonus: 3
@@ -250,7 +250,7 @@ MonoBehaviour:
       description: Throws multiple stones in a wider spread.
       cost: 250
       icon: {fileID: 0}
-      rangeBonus: 0
+      rangeBonus: 0.5
       fireRateBonus: 0
       damageBonus: 0
       projectilesPerShotBonus: 2
@@ -290,7 +290,7 @@ MonoBehaviour:
       description: 'Boulder hits briefly slow enemies on impact. '
       cost: 90
       icon: {fileID: 0}
-      rangeBonus: 0
+      rangeBonus: 0.5
       fireRateBonus: 0
       damageBonus: 0
       projectilesPerShotBonus: 0
@@ -303,9 +303,9 @@ MonoBehaviour:
       description: Impacts create cracks that slow affects enemies near the hit.
       cost: 240
       icon: {fileID: 0}
-      rangeBonus: 2
-      fireRateBonus: 2
-      damageBonus: 2
+      rangeBonus: 0.5
+      fireRateBonus: 0
+      damageBonus: 0
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0

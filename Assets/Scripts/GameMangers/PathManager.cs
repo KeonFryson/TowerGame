@@ -5,7 +5,7 @@ public class PathManager : MonoBehaviour
     public static PathManager Instance { get; private set; }
 
     [Header("Path Data")]
-    [SerializeField] private PathMapData pathMapData;
+    [SerializeField] public PathMapData pathMapData;
     [SerializeField] private Color pathColor = Color.cyan;
     [SerializeField] private bool showPath = true;
 
@@ -49,10 +49,10 @@ public class PathManager : MonoBehaviour
         if (!showPath || pathMapData == null || pathMapData.nodes == null)
             return;
 
-        Gizmos.color = pathColor;
         for (int i = 0; i < pathMapData.nodes.Length; i++)
         {
             var node = pathMapData.nodes[i];
+            Gizmos.color = pathColor;
             Gizmos.DrawWireSphere(node.position, 0.3f);
 
             if (node.nextNodeIndices != null)
@@ -63,6 +63,21 @@ public class PathManager : MonoBehaviour
                     {
                         Vector3 from = node.position;
                         Vector3 to = pathMapData.nodes[nextIndex].position;
+
+                        // Set color based on direction
+                        if (Mathf.Approximately(to.x, from.x))
+                        {
+                            Gizmos.color = Color.black; // Up or down
+                        }
+                        else if (to.x < from.x)
+                        {
+                            Gizmos.color = Color.red; // Left
+                        }
+                        else
+                        {
+                            Gizmos.color = pathColor; // Default
+                        }
+
                         Gizmos.DrawLine(from, to);
                         DrawArrowHead(from, to, 0.3f, 20f);
                     }

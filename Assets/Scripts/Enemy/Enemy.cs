@@ -12,6 +12,26 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private int cost = 1;
 
+    public int Health => health;
+    public float MoveSpeed => moveSpeed;
+
+    public int Armor => armor;
+
+    public int MoneyReward => moneyReward;
+
+    public int Damage => damage;
+
+
+    [Header("Description")]
+    [TextArea]
+    [SerializeField] private string description;
+
+    public string GetDescription()
+    {
+        return description;
+    }
+
+
     [Header("Tier")]
     [SerializeField] private EnemyTier tier;
 
@@ -64,11 +84,14 @@ public class Enemy : MonoBehaviour
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        // Use a slightly larger threshold and snap to target
+        if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
         {
+            transform.position = targetPosition;
             if (currentNode.nextNodeIndices != null && currentNode.nextNodeIndices.Length > 0)
             {
                 int nextIdx = currentNode.nextNodeIndices[Random.Range(0, currentNode.nextNodeIndices.Length)];
+                nextIdx = Mathf.Clamp(nextIdx, 0, PathManager.Instance.GetWaypointCount() - 1);
                 currentNodeIndex = nextIdx;
             }
             else
@@ -183,10 +206,31 @@ public class Enemy : MonoBehaviour
         }
         moveSpeed = originalSpeed;
     }
-
+    public void SetCurrentNodeIndex(int nodeIndex)
+    {
+        currentNodeIndex = nodeIndex;
+    }
     public void ApplyPushback(Vector3 direction, float force)
     {
         transform.position += direction * force;
+
+        // Snap to nearest path node after pushback
+        if (PathManager.Instance != null)
+        {
+            int closestNode = 0;
+            float closestDist = float.MaxValue;
+            int nodeCount = PathManager.Instance.GetWaypointCount();
+            for (int i = 0; i < nodeCount; i++)
+            {
+                float dist = Vector3.Distance(transform.position, PathManager.Instance.GetWaypoint(i));
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestNode = i;
+                }
+            }
+            SetCurrentNodeIndex(closestNode);
+        }
     }
 
     public void SetColor (Color color)

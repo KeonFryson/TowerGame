@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7701841139636765560}
   - component: {fileID: 7130802125073428021}
   - component: {fileID: 4607913974503557605}
+  - component: {fileID: 7532656721323376597}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -86,6 +87,8 @@ MonoBehaviour:
   startingWavePoints: 1
   waveLinearScale: 2.5
   waveQuadraticScale: 0.15
+  enableTutorial: 1
+  tutorialPopupPrefab: {fileID: 6576551996754431315, guid: e7a26ee03d17d664ab78ba3eaef1c4d8, type: 3}
 --- !u!114 &7701841139636765560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c498c958f4bf5cd459fbba4906a75a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathManager
-  pathMapData: {fileID: 0}
+  pathMapData: {fileID: 11400000, guid: 294bad30db0869248b505fb5704903a6, type: 2}
   pathColor: {r: 0, g: 0.7322817, b: 1, a: 1}
   showPath: 1
 --- !u!114 &4607913974503557605
@@ -140,3 +143,15 @@ MonoBehaviour:
   towerLayerMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &7532656721323376597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361061165515505607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b792286dd8c4e294a8909890bea8bd34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveData

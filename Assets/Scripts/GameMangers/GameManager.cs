@@ -33,9 +33,18 @@ public class GameManager : MonoBehaviour
     private float previousTimeScale = 1f;
     [HideInInspector]
     public UnityEvent<bool> OnPauseStateChanged;
+    bool GameOverFlag = false;
+    public bool IsGameOver => GameOverFlag;
+
+    private WInLoseUI winLoseUI;
 
     private void Awake()
     {
+        if(winLoseUI == null)
+        {
+            winLoseUI = FindFirstObjectByType<WInLoseUI>();
+        }
+
         if (Instance == null)
         {
             Instance = this;
@@ -81,7 +90,7 @@ public class GameManager : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            GameOver();
+            LoseGame();
         }
     }
 
@@ -91,10 +100,27 @@ public class GameManager : MonoBehaviour
         OnWaveChanged?.Invoke(currentWave);
     }
 
-    private void GameOver()
+   public void LoseGame()
     {
-        OnGameOver?.Invoke();
+        if (GameOverFlag) return;
+        GameOverFlag = true;
         Debug.Log("Game Over!");
+        OnGameOver?.Invoke();
+        CameraMovement.Instance.enabled = false;
+        winLoseUI.ShowLose();
+        
+
+    }
+
+    public void WinGame()
+    {
+        if (GameOverFlag) return;
+        GameOverFlag = true;
+        OnGameOver?.Invoke();
+        Debug.Log("You Win!");
+        CameraMovement.Instance.enabled = false;
+        winLoseUI.ShowWin();
+        
     }
 
     public int GetWave() => currentWave;
@@ -142,6 +168,12 @@ public class GameManager : MonoBehaviour
             OnPauseStateChanged?.Invoke(true);
         }
     }
+
+    public void ResetMap()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 
     public void ResumeGame()
     {

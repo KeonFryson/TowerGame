@@ -17,23 +17,41 @@ MonoBehaviour:
     position: {x: -37, y: 0, z: 0}
     nextNodeIndices: 01000000
   - nodeName: 
+    position: {x: -29.370674, y: 0, z: 0}
+    nextNodeIndices: 02000000
+  - nodeName: 
+    position: {x: -21.172132, y: 0, z: 0}
+    nextNodeIndices: 03000000
+  - nodeName: 
     position: {x: -16, y: 0, z: 0}
-    nextNodeIndices: 0200000003000000
+    nextNodeIndices: 0500000004000000
   - nodeName: 
     position: {x: -16, y: 4, z: 0}
-    nextNodeIndices: 05000000
-  - nodeName: 
-    position: {x: -16, y: -4, z: 0}
-    nextNodeIndices: 04000000
-  - nodeName: 
-    position: {x: 4, y: -4, z: 0}
-    nextNodeIndices: 06000000
-  - nodeName: 
-    position: {x: 4, y: 4, z: 0}
-    nextNodeIndices: 06000000
-  - nodeName: 
-    position: {x: 4.06, y: 0.04, z: 0}
     nextNodeIndices: 07000000
   - nodeName: 
-    position: {x: 37.9, y: 0.04, z: 0}
+    position: {x: -16, y: -3.8333714, z: 0}
+    nextNodeIndices: 06000000
+  - nodeName: 
+    position: {x: -6.277018, y: -3.8333714, z: 0}
+    nextNodeIndices: 09000000
+  - nodeName: 
+    position: {x: -6.1287994, y: 4, z: 0}
+    nextNodeIndices: 08000000
+  - nodeName: 
+    position: {x: 3.868736, y: 4, z: 0}
+    nextNodeIndices: 0a000000
+  - nodeName: 
+    position: {x: 3.8777146, y: -3.8333714, z: 0}
+    nextNodeIndices: 0a000000
+  - nodeName: 
+    position: {x: 3.8777146, y: 0, z: 0}
+    nextNodeIndices: 0b000000
+  - nodeName: 
+    position: {x: 14.162001, y: 0, z: 0}
+    nextNodeIndices: 0c000000
+  - nodeName: 
+    position: {x: 25.609388, y: 0, z: 0}
+    nextNodeIndices: 0d000000
+  - nodeName: 
+    position: {x: 38.158676, y: 0, z: 0}
     nextNodeIndices: 

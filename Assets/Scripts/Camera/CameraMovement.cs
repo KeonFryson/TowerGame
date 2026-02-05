@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class CameraMovement : MonoBehaviour
 {
+    public static CameraMovement Instance { get; private set; }
+
     [Header("Cinemachine")]
     [SerializeField] private CinemachineCamera virtualCamera;
     [SerializeField] private CinemachineConfiner2D confiner;
@@ -31,8 +33,21 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     private Collider2D boundingShape;
 
+    public bool isActive = true;
+
     private void Awake()
     {
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         inputActions = new InputSystem_Actions();
         cam = Camera.main;
 
@@ -81,7 +96,9 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-         
+        if (!isActive)
+            return;
+
         HandleKeyboardMovement();
         HandleEdgeScrolling();
         HandleMouseDrag();

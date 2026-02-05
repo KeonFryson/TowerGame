@@ -1,7 +1,7 @@
- 
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems; // Add this for EventTrigger
 
 public class TowerDataPanelUI : MonoBehaviour
 {
@@ -18,17 +18,13 @@ public class TowerDataPanelUI : MonoBehaviour
     private Tower currentTower;
     private int sellAmount;
 
-
     private void Start()
     {
-       
         // Setup Sell button
         if (SellButton != null)
         {
             SellButton.onClick.AddListener(OnSellButtonPressed);
         }
-
-
     }
 
     private void Update()
@@ -39,7 +35,7 @@ public class TowerDataPanelUI : MonoBehaviour
             ShowTowerData(currentTower);
         }
 
-        if(currentTower == null)
+        if (currentTower == null)
         {
             Hide();
         }
@@ -63,7 +59,7 @@ public class TowerDataPanelUI : MonoBehaviour
         string displayName = tower.name.Replace("(Clone)", "").Trim();
         nameText.text = displayName;
         spriteImage.sprite = tower.GetComponentInChildren<SpriteRenderer>().sprite;
-         
+
         // Setup upgrade buttons for 3 paths
         for (int path = 0; path < 3; path++)
         {
@@ -73,8 +69,6 @@ public class TowerDataPanelUI : MonoBehaviour
             Image upgradeIcon = upgradeButtonGroup.Find("UpgradeNumberImage").GetComponent<Image>();
 
             TowerUpgrade nextUpgrade = tower.GetNextUpgrade(path);
-
-
 
             // Setup targeting dropdown
             if (targetingDropdown != null)
@@ -88,7 +82,6 @@ public class TowerDataPanelUI : MonoBehaviour
                 {
                     tower.targetMode = (Tower.TargetMode)idx;
                 });
-
             }
 
             // Set the upgrade bar image based on the current tier
@@ -111,6 +104,14 @@ public class TowerDataPanelUI : MonoBehaviour
             // Remove previous listeners
             upgradeButton.onClick.RemoveAllListeners();
 
+            // Remove previous EventTriggers
+            EventTrigger trigger = upgradeButton.GetComponent<EventTrigger>();
+            if (trigger == null)
+            {
+                trigger = upgradeButton.gameObject.AddComponent<EventTrigger>();
+            }
+            trigger.triggers.Clear();
+
             if (nextUpgrade != null && tower.CanUpgrade(path))
             {
                 upgradeButton.interactable = GameManager.Instance.GetMoney() >= nextUpgrade.cost;
@@ -124,26 +125,75 @@ public class TowerDataPanelUI : MonoBehaviour
                     {
                         GameManager.Instance.SpendMoney(nextUpgrade.cost);
                         tower.ApplyUpgrade(capturedPath);
+                        ToolTip.HideToolTipStatic(); // Hide tooltip after upgrade
                         ShowTowerData(tower); // Refresh UI
                     }
                 });
+
+                // Tooltip on hover
+                string tooltipText = GetUpgradeTooltip(nextUpgrade);
+                // Pointer Enter
+                var entryEnter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+                entryEnter.callback.AddListener((_) => ToolTip.ShowToolTipStatic(tooltipText));
+                trigger.triggers.Add(entryEnter);
+
+                // Pointer Exit
+                var entryExit = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+                entryExit.callback.AddListener((_) => ToolTip.HideToolTipStatic());
+                trigger.triggers.Add(entryExit);
             }
             else
             {
                 upgradeButton.interactable = false;
                 buttonText.text = "Maxed";
+
+                // Remove tooltip triggers for maxed buttons
+                trigger.triggers.Clear();
             }
-
-
         }
     }
 
+    private string GetUpgradeTooltip(TowerUpgrade upgrade)
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.AppendLine(upgrade.upgradeName);
+        sb.AppendLine(upgrade.description);
+        sb.AppendLine($"Cost: ${upgrade.cost}");
+
+        // Only show stats that change
+        if (upgrade.rangeBonus != 0)
+            sb.AppendLine($"Range: {(upgrade.rangeBonus > 0 ? "+" : "")}{upgrade.rangeBonus}");
+        if (upgrade.fireRateBonus != 0)
+            sb.AppendLine($"Fire Rate: {(upgrade.fireRateBonus > 0 ? "+" : "")}{upgrade.fireRateBonus}");
+        if (upgrade.damageBonus != 0)
+            sb.AppendLine($"Damage: {(upgrade.damageBonus > 0 ? "+" : "")}{upgrade.damageBonus}");
+        if (upgrade.projectilesPerShotBonus != 0)
+            sb.AppendLine($"Projectiles Per Shot: {(upgrade.projectilesPerShotBonus > 0 ? "+" : "")}{upgrade.projectilesPerShotBonus}");
+        if (upgrade.spreadAngleBonus != 0)
+            sb.AppendLine($"Spread Angle: {(upgrade.spreadAngleBonus > 0 ? "+" : "")}{upgrade.spreadAngleBonus}");
+        if (upgrade.projectileSizeBonus != 0)
+            sb.AppendLine($"Projectile Size: {(upgrade.projectileSizeBonus > 0 ? "+" : "")}{upgrade.projectileSizeBonus}");
+        if (upgrade.pierceBonus != 0)
+            sb.AppendLine($"Pierce: {(upgrade.pierceBonus > 0 ? "+" : "")}{upgrade.pierceBonus}");
+
+        if (upgrade.projectileEffects != null && upgrade.projectileEffects.Count > 0)
+        {
+            sb.Append("Effects: ");
+            for (int i = 0; i < upgrade.projectileEffects.Count; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append(upgrade.projectileEffects[i]);
+            }
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
+    }
 
     public void OnSellButtonPressed()
     {
         if (currentTower != null)
         {
-            
             GameManager.Instance.AddMoney(sellAmount);
             Destroy(currentTower.gameObject);
             Hide();
