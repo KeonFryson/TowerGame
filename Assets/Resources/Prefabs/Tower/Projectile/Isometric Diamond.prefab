@@ -109,6 +109,7 @@ MonoBehaviour:
   speed: 10
   maxLifetime: 10
   followTarget: 0
+  effectType: 0
 --- !u!58 &6524668145904994694
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -174,127 +174,179 @@ MonoBehaviour:
   fireRateBonus: 0
   damage: 1
   cost: 250
-  baseProjectilesPerShot: 1
+  baseProjectilesPerShot: 0
   spreadAngle: 0
   upgradeTiers: 000000000000000000000000
   maxPathLevels: 050000000500000005000000
   upgradePaths:
   - upgrades:
-    - upgradeName: Longer Range
-      description: Rocks can be cast from farther away.
-      cost: 100
+    - upgradeName: Hardened Rock
+      description: Boulders become denser, increasing impact damage.
+      cost: 120
       icon: {fileID: 0}
-      rangeBonus: 3
-      fireRateBonus: 0.5
-      damageBonus: 0
+      rangeBonus: 0
+      fireRateBonus: 0
+      damageBonus: 1
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
-    - upgradeName: Stronger Rocks
-      description: Damage increases.
-      cost: 150
+      projectileSizeBonus: 0.2
+      projectileEffects: 00000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Dense Boulder
+      description: Stronger rock cores deal increased damage and pierce one enemy.
+      cost: 300
       icon: {fileID: 0}
       rangeBonus: 0
       fireRateBonus: 0
       damageBonus: 2
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
-    - upgradeName: Quick Cast
-      description: Faster spell release and small range boost.
+      projectileSizeBonus: 0.3
+      projectileEffects: 0400000000000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 1
+    - upgradeName: Armor Break
+      description: Boulder strikes crack enemy defenses, reducing their armor.
       cost: 550
       icon: {fileID: -7846892096075038837, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
-      rangeBonus: 1
-      fireRateBonus: 2
-      damageBonus: 0
+      rangeBonus: 0
+      fireRateBonus: 0.1
+      damageBonus: 1
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
-    - upgradeName: Boulder Launcher
-      description: Summons a dense boulder for tougher foes.
+      projectileSizeBonus: 0.1
+      projectileEffects: 02000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 2
+    - upgradeName: Mountain Boulder
+      description: Massive earth-forged boulders crush enemies with huge force.
       cost: 1500
       icon: {fileID: -7846892096075038837, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
       rangeBonus: 1
-      fireRateBonus: 2
+      fireRateBonus: 0
       damageBonus: 4
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
+      projectileSizeBonus: 0.3
+      projectileEffects: 0300000001000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 2
   - upgrades:
-    - upgradeName: Path2_Upgrade1
-      description: 
-      cost: 300
+    - upgradeName: Pebble Shot
+      description: Each cast throws an additional small stone.
+      cost: 100
       icon: {fileID: 0}
-      rangeBonus: 1
-      fireRateBonus: 1
-      damageBonus: 1
-      projectilesPerShotBonus: 0
-      spreadAngleBonus: 0
-    - upgradeName: Path2_Upgrade2
-      description: 
-      cost: 400
+      rangeBonus: 0
+      fireRateBonus: 0
+      damageBonus: 0
+      projectilesPerShotBonus: 3
+      spreadAngleBonus: 15
+      projectileSizeBonus: -0.2
+      projectileEffects: 
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Scatter Throw
+      description: Throws multiple stones in a wider spread.
+      cost: 250
       icon: {fileID: 0}
-      rangeBonus: 2
-      fireRateBonus: 2
-      damageBonus: 2
-      projectilesPerShotBonus: 0
-      spreadAngleBonus: 0
-    - upgradeName: Path3_Upgrade3
-      description: 
-      cost: 500
+      rangeBonus: 0
+      fireRateBonus: 0
+      damageBonus: 0
+      projectilesPerShotBonus: 2
+      spreadAngleBonus: 20
+      projectileSizeBonus: 0.05
+      projectileEffects: 
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Rock Barrage
+      description: Greatly increases multishot and casting speed.
+      cost: 600
       icon: {fileID: -4436009720956083870, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
-      rangeBonus: 3
-      fireRateBonus: 3
-      damageBonus: 3
-      projectilesPerShotBonus: 0
-      spreadAngleBonus: 0
-    - upgradeName: Path4_Upgrade4
+      rangeBonus: 0
+      fireRateBonus: 0.2
+      damageBonus: 0
+      projectilesPerShotBonus: 1
+      spreadAngleBonus: 25
+      projectileSizeBonus: 0.05
+      projectileEffects: 
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Earthshatter Volley
       description: 
-      cost: 500
+      cost: 1400
       icon: {fileID: 7364225122225125127, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
-      rangeBonus: 3
-      fireRateBonus: 3
-      damageBonus: 3
-      projectilesPerShotBonus: 0
-      spreadAngleBonus: 0
-  - upgrades:
-    - upgradeName: Path4_Upgrade1
-      description: 
-      cost: 300
-      icon: {fileID: 0}
       rangeBonus: 1
-      fireRateBonus: 1
+      fireRateBonus: 0.25
       damageBonus: 1
+      projectilesPerShotBonus: 3
+      spreadAngleBonus: 30
+      projectileSizeBonus: 0.05
+      projectileEffects: 09000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+  - upgrades:
+    - upgradeName: Slow Impact
+      description: 'Boulder hits briefly slow enemies on impact. '
+      cost: 90
+      icon: {fileID: 0}
+      rangeBonus: 0
+      fireRateBonus: 0
+      damageBonus: 0
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
-    - upgradeName: Path4_Upgrade2
-      description: 
-      cost: 400
+      projectileSizeBonus: 0
+      projectileEffects: 05000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Ground Crack
+      description: Impacts create cracks that slow affects enemies near the hit.
+      cost: 240
       icon: {fileID: 0}
       rangeBonus: 2
       fireRateBonus: 2
       damageBonus: 2
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
-    - upgradeName: Path4_Upgrade3
-      description: 
-      cost: 500
+      projectileSizeBonus: 0
+      projectileEffects: 06000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Tremor Shot
+      description: Each hit causes a small tremor, stunning enemies briefly.
+      cost: 550
       icon: {fileID: 8824793825499218426, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
-      rangeBonus: 3
-      fireRateBonus: 3
-      damageBonus: 3
+      rangeBonus: 0
+      fireRateBonus: 0.1
+      damageBonus: 1
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
-    - upgradeName: Path4_Upgrade4
-      description: 
-      cost: 500
+      projectileSizeBonus: 0.15
+      projectileEffects: 07000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+    - upgradeName: Quake Core
+      description: Boulder impacts rupture the ground, stunning and slowing in an
+        area.
+      cost: 1600
       icon: {fileID: -2955211545275086457, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
-      rangeBonus: 3
-      fireRateBonus: 3
-      damageBonus: 3
+      rangeBonus: 1
+      fireRateBonus: 0
+      damageBonus: 2
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
+      projectileSizeBonus: 0.1
+      projectileEffects: 0600000008000000
+      projectileSprite: {fileID: 0}
+      pierceBonus: 0
+  abilities:
+  - {fileID: 0}
   targetMode: 4
   spriteRenderer: {fileID: 0}
   projectileSpawnPoint: {fileID: 4301800600064697111}
   projectilePrefab: {fileID: 3979499744210860842, guid: 2642cfe071042bd498ac389466ecf935, type: 3}
   showRange: 1
+  projectileEffects: 
 --- !u!61 &922495378025188089
 BoxCollider2D:
   m_ObjectHideFlags: 0

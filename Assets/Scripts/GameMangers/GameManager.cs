@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,18 +14,24 @@ public class GameManager : MonoBehaviour
     private int currentLives;
     private int currentWave = 0;
 
+    [HideInInspector]
     public UnityEvent<int> OnMoneyChanged;
+    [HideInInspector]
     public UnityEvent<int> OnLivesChanged;
+    [HideInInspector]
     public UnityEvent<int> OnWaveChanged;
+    [HideInInspector]
     public UnityEvent OnGameOver;
 
-    [Header("Game Speed")]
-    [SerializeField] private float[] gameSpeeds = { 1f, 2f, 4f };
+     
+    private float[] gameSpeeds = { 1f, 2f, 4f };
     private int currentSpeedIndex = 0;
+    [HideInInspector]
     public UnityEvent<float> OnGameSpeedChanged;
 
     private bool isPaused = false;
     private float previousTimeScale = 1f;
+    [HideInInspector]
     public UnityEvent<bool> OnPauseStateChanged;
 
     private void Awake()
@@ -144,6 +151,11 @@ public class GameManager : MonoBehaviour
             Time.timeScale = gameSpeeds[currentSpeedIndex];
             OnPauseStateChanged?.Invoke(false);
         }
+    }
+
+    public void OpenMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public bool IsPaused() => isPaused;

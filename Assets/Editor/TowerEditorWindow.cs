@@ -1,6 +1,8 @@
+using Mono.Cecil.Cil;
+using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using System;
 
 public class TowerEditorWindow : EditorWindow
 {
@@ -30,6 +32,13 @@ public class TowerEditorWindow : EditorWindow
                 return;
             }
 
+            if (selectedTower.upgradePaths == null)
+            {
+                EditorGUILayout.HelpBox("Selected Tower does not have any upgrade paths assigned.", MessageType.Warning);
+                EditorGUILayout.EndScrollView();
+                return;
+            }
+
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Base Stats", EditorStyles.boldLabel);
 
@@ -43,6 +52,39 @@ public class TowerEditorWindow : EditorWindow
             float newDamage = EditorGUILayout.FloatField("Damage", (float)towerType.GetField("damage", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower));
             int newCost = EditorGUILayout.IntField("Cost", selectedTower.GetCost());
             float newSpreadAngle = EditorGUILayout.FloatField("Spread Angle", (float)towerType.GetField("spreadAngle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower));
+            int newProjectilesPerShot = EditorGUILayout.IntField("Projectiles Per Shot", (int)towerType.GetField("projectilesPerShotBonus", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower));
+            float newProjectileSizeBonus = EditorGUILayout.FloatField("Projectile Size Bonus", (float)towerType.GetField("projectileSizeBonus", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower));
+
+            // MULTI-EFFECT SUPPORT: Base Projectile Effects (multiple selection)
+            List<ProjectileEffectType> baseProjectileEffects = null;
+            var baseProjectileEffectsField = towerType.GetField("projectileEffects", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (baseProjectileEffectsField != null)
+            {
+                baseProjectileEffects = baseProjectileEffectsField.GetValue(selectedTower) as List<ProjectileEffectType>;
+                if (baseProjectileEffects == null)
+                {
+                    baseProjectileEffects = new List<ProjectileEffectType>();
+                    baseProjectileEffectsField.SetValue(selectedTower, baseProjectileEffects);
+                }
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Base Projectile Effects", EditorStyles.miniLabel);
+                int baseEffectCount = Mathf.Max(0, EditorGUILayout.IntField("Count", baseProjectileEffects.Count));
+                while (baseProjectileEffects.Count < baseEffectCount)
+                    baseProjectileEffects.Add(ProjectileEffectType.None);
+                while (baseProjectileEffects.Count > baseEffectCount)
+                    baseProjectileEffects.RemoveAt(baseProjectileEffects.Count - 1);
+                for (int i = 0; i < baseProjectileEffects.Count; i++)
+                {
+                    baseProjectileEffects[i] = (ProjectileEffectType)EditorGUILayout.EnumPopup($"Effect {i + 1}", baseProjectileEffects[i]);
+                }
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("Field 'projectileEffects' not found on Tower.", MessageType.Warning);
+            }
+
+            Sprite newProjectileSprite = (Sprite)EditorGUILayout.ObjectField("Projectile Sprite", (Sprite)towerType.GetField("projectileSprite", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(selectedTower), typeof(Sprite), false);
+
             // Upgrade Paths
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Upgrade Paths", EditorStyles.boldLabel);
@@ -83,6 +125,26 @@ public class TowerEditorWindow : EditorWindow
                     upgrade.fireRateBonus = EditorGUILayout.FloatField("Fire Rate Bonus", upgrade.fireRateBonus);
                     upgrade.damageBonus = EditorGUILayout.FloatField("Damage Bonus", upgrade.damageBonus);
                     upgrade.projectilesPerShotBonus = EditorGUILayout.IntField("Projectiles Per Shot Bonus", upgrade.projectilesPerShotBonus);
+                    upgrade.spreadAngleBonus = EditorGUILayout.FloatField("Spread Angle Bonus", upgrade.spreadAngleBonus);
+                    upgrade.projectileSizeBonus = EditorGUILayout.FloatField("Projectile Size Bonus", upgrade.projectileSizeBonus);
+                    upgrade.projectileSprite = (Sprite)EditorGUILayout.ObjectField("Projectile Sprite", upgrade.projectileSprite, typeof(Sprite), false);
+
+                    // Only the projectileEffects list and pierceBonus
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("Projectile Effects", EditorStyles.miniLabel);
+                    if (upgrade.projectileEffects == null)
+                        upgrade.projectileEffects = new List<ProjectileEffectType>();
+                    int effectCount = Mathf.Max(0, EditorGUILayout.IntField("Count", upgrade.projectileEffects.Count));
+                    while (upgrade.projectileEffects.Count < effectCount)
+                        upgrade.projectileEffects.Add(ProjectileEffectType.None);
+                    while (upgrade.projectileEffects.Count > effectCount)
+                        upgrade.projectileEffects.RemoveAt(upgrade.projectileEffects.Count - 1);
+                    for (int i = 0; i < upgrade.projectileEffects.Count; i++)
+                    {
+                        upgrade.projectileEffects[i] = (ProjectileEffectType)EditorGUILayout.EnumPopup($"Effect {i + 1}", upgrade.projectileEffects[i]);
+                    }
+                    upgrade.pierceBonus = EditorGUILayout.IntField("Pierce Bonus", upgrade.pierceBonus);
+
                     EditorGUILayout.EndVertical();
                 }
             }
@@ -102,6 +164,20 @@ public class TowerEditorWindow : EditorWindow
                     .SetValue(selectedTower, newDamage);
                 towerType.GetField("cost", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                     .SetValue(selectedTower, newCost);
+                towerType.GetField("spreadAngle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                    .SetValue(selectedTower, newSpreadAngle);
+                towerType.GetField("baseProjectilesPerShot", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                    .SetValue(selectedTower, newProjectilesPerShot);
+                towerType.GetField("projectileSizeBonus", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                    .SetValue(selectedTower, newProjectileSizeBonus);
+                towerType.GetField("projectileSprite", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                    .SetValue(selectedTower, newProjectileSprite);
+
+                // Save base projectile effects
+                if (baseProjectileEffectsField != null)
+                {
+                    baseProjectileEffectsField.SetValue(selectedTower, baseProjectileEffects);
+                }
 
                 EditorUtility.SetDirty(selectedTower);
 

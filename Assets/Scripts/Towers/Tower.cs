@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#region Upgrade Data Structures
 [System.Serializable]
- public class TowerUpgrade
+public class TowerUpgrade
 {
     public string upgradeName;
     public string description;
@@ -14,29 +15,40 @@ using UnityEngine.UI;
     public float rangeBonus;
     public float fireRateBonus;
     public float damageBonus;
-    public int projectilesPerShotBonus; // New: bonus projectiles per shot
-    public float spreadAngleBonus; // New: bonus spread angle
+    public int projectilesPerShotBonus; 
+    public float spreadAngleBonus;
+    // Projectile bonuses/effects
+    public float projectileSizeBonus;
+ 
+    public List<ProjectileEffectType> projectileEffects = new List<ProjectileEffectType>(); // Multiple effects
+    public Sprite projectileSprite;
+    public int pierceBonus; // Add this if you want upgrades to add pierce
 }
+#endregion
 
 public class Tower : MonoBehaviour
 {
+    #region Fields & Properties
     [Header("Tower Stats")]
     [SerializeField] private float range = 5f;
-    [SerializeField] private float baseFireRate = 1f; // Renamed for clarity
-    [SerializeField] private float fireRateBonus = 0f; // New: total bonus from upgrades
+    [SerializeField] private float baseFireRate = 1f;
+    [SerializeField] private float fireRateBonus = 0f;
     [SerializeField] private float damage = 1f;
     [SerializeField] private int cost = 100;
-    [SerializeField] private int baseProjectilesPerShot = 1; // New: base projectiles per shot
-    private int projectilesPerShotBonus = 0; // New: bonus from upgrades
+    [SerializeField] private int baseProjectilesPerShot = 1;
+    private int projectilesPerShotBonus = 0;
     [SerializeField] private float spreadAngle = 30f;
 
     [Header("Upgrade System")]
     [Tooltip("Current tier for each path (e.g., [2,1,0] means path 0 is tier 2, path 1 is tier 1, path 2 is tier 0)")]
-    public int[] upgradeTiers = new int[3]; // Only here!
+    public int[] upgradeTiers = new int[3];
     [Tooltip("Maximum tier for each path.")]
-    public int[] maxPathLevels = new int[3] { 5, 5, 5 }; // Only here!
+    public int[] maxPathLevels = new int[3] { 5, 5, 5 };
     [Tooltip("Upgrade data for each path. Each path is an array of TowerUpgrade objects.")]
     public TowerUpgradePath[] upgradePaths = new TowerUpgradePath[3];
+
+    [Header("Abilities")]
+    [SerializeField] private TowerAbility[] abilities;
 
     [Header("Targeting")]
     public TargetMode targetMode = TargetMode.Close;
@@ -46,6 +58,7 @@ public class Tower : MonoBehaviour
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private GameObject projectilePrefab;
     private GameObject rangeIndicator;
+
     [Header("Debug")]
     [SerializeField] private bool showRange = true;
 
@@ -54,20 +67,16 @@ public class Tower : MonoBehaviour
     private LineRenderer rangeLineRenderer;
     public bool IsPlaced { get; private set; } = false;
 
-    public void MarkAsPlaced()
-    {
-        IsPlaced = true;
-    }
+    // Ability runtime state
+    private float fireRateMultiplier = 1f;
+    private float projectileSizeBonus = 0f;
+    [SerializeField] private List<ProjectileEffectType> projectileEffects = new List<ProjectileEffectType>();
+    private Sprite projectileSprite = null;
 
-    public enum TargetMode
-    {
-        First,
-        Last,
-        Strong,
-        Weak,
-        Close
-    }
+    private int pierceBonus = 0;
+    #endregion
 
+    #region Unity Methods
     public void Start()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -76,32 +85,28 @@ public class Tower : MonoBehaviour
     private void Update()
     {
         fireTimer += Time.deltaTime;
-
-        float effectiveFireRate = baseFireRate + fireRateBonus;
-        if (effectiveFireRate < 0.1f) effectiveFireRate = 0.1f; // Prevent divide by zero or negative
-
+        float effectiveFireRate = (baseFireRate + fireRateBonus) * fireRateMultiplier;
+        if (effectiveFireRate < 0.1f) effectiveFireRate = 0.1f;
         if (fireTimer >= 1f / effectiveFireRate)
         {
             FindAndAttackTarget();
             fireTimer = 0f;
         }
     }
+    #endregion
 
-    
+    #region Targeting & Attacking
+    public enum TargetMode { First, Last, Strong, Weak, Close }
 
     private void FindAndAttackTarget()
     {
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         List<Enemy> enemiesInRange = new List<Enemy>();
-
         foreach (Enemy enemy in enemies)
         {
             if (Vector3.Distance(transform.position, enemy.GetPosition()) <= range)
-            {
                 enemiesInRange.Add(enemy);
-            }
         }
-
         if (enemiesInRange.Count > 0)
         {
             currentTarget = SelectTarget(enemiesInRange);
@@ -113,14 +118,11 @@ public class Tower : MonoBehaviour
     {
         if (enemies == null || enemies.Count == 0)
             return null;
-
         switch (targetMode)
         {
             case TargetMode.First:
-                // Assuming "First" means the enemy furthest along the path (highest progress)
                 return enemies[enemies.Count - 1];
             case TargetMode.Last:
-                // Assuming "Last" means the enemy least progressed (lowest progress)
                 return enemies[0];
             case TargetMode.Close:
                 Enemy closest = enemies[0];
@@ -140,9 +142,7 @@ public class Tower : MonoBehaviour
                 for (int i = 1; i < enemies.Count; i++)
                 {
                     if ((int)enemies[i].Tier > (int)strongest.Tier)
-                    {
                         strongest = enemies[i];
-                    }
                 }
                 return strongest;
             case TargetMode.Weak:
@@ -150,9 +150,7 @@ public class Tower : MonoBehaviour
                 for (int i = 1; i < enemies.Count; i++)
                 {
                     if ((int)enemies[i].Tier < (int)weakest.Tier)
-                    {
                         weakest = enemies[i];
-                    }
                 }
                 return weakest;
             default:
@@ -163,37 +161,37 @@ public class Tower : MonoBehaviour
     private void Attack(Enemy target)
     {
         if (target == null) return;
-
         int totalProjectiles = baseProjectilesPerShot + projectilesPerShotBonus;
         if (totalProjectiles < 1) totalProjectiles = 1;
-
         if (projectilePrefab != null && projectileSpawnPoint != null)
         {
             float angleStep = totalProjectiles > 1 ? spreadAngle / (totalProjectiles - 1) : 0f;
             float startAngle = -spreadAngle / 2f;
-
             Vector3 toTarget = (target.GetPosition() - projectileSpawnPoint.position).normalized;
-
             for (int i = 0; i < totalProjectiles; i++)
             {
                 float angle = startAngle + i * angleStep;
                 Quaternion spreadRot = Quaternion.AngleAxis(angle, Vector3.forward);
                 Vector3 direction = spreadRot * toTarget;
-
-                // --- Aim Assist: Snap direction to target if within 0.1 units ---
                 float aimAssistThreshold = 0.1f;
                 Vector3 exactToTarget = (target.GetPosition() - projectileSpawnPoint.position).normalized;
                 if (Vector3.Distance(direction, exactToTarget) <= aimAssistThreshold)
-                {
                     direction = exactToTarget;
-                }
-
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
                 Projectile proj = projectile.GetComponent<Projectile>();
                 if (proj != null)
                 {
                     proj.SetTarget(target, damage, false);
                     proj.SetInitialDirection(direction);
+                    proj.SetProjectileSize(0.5f + projectileSizeBonus);
+
+                    // Set all effects
+                    proj.SetProjectileEffects(projectileEffects);
+                    if (pierceBonus > 0)
+                        proj.SetPierceCount(pierceBonus);
+
+                    if (projectileSprite != null)
+                        proj.SetProjectileSprite(projectileSprite);
                 }
             }
         }
@@ -202,29 +200,73 @@ public class Tower : MonoBehaviour
             target.TakeDamage(damage);
         }
     }
+    #endregion
 
-    // --- Upgrade System ---
+    #region Abilities
+    public TowerAbility[] GetAbilities() => abilities;
 
-    // Place this inside your Tower class
+    public void ActivateAbility(int index)
+    {
+        if (abilities != null && index >= 0 && index < abilities.Length)
+            abilities[index].Activate(this);
+    }
 
-    /// <summary>
-    /// Returns true if the given path can be upgraded (not at max tier and follows Bloons-style rules).
-    /// </summary>
+    public void AddFireRateMultiplier(float multiplier)
+    {
+        fireRateMultiplier *= multiplier;
+    }
+
+    public void RemoveFireRateMultiplier(float multiplier)
+    {
+        if (multiplier != 0f)
+            fireRateMultiplier /= multiplier;
+    }
+
+    public void AddDamageBonus(float bonus)
+    {
+        damage += bonus;
+    }
+
+    public void RemoveDamageBonus(float bonus)
+    {
+        damage -= bonus;
+    }
+
+    public void AddRangeBonus(float bonus)
+    {
+        range += bonus;
+        UpdateRangeIndicator();
+    }
+
+    public void RemoveRangeBonus(float bonus)
+    {
+        range -= bonus;
+        UpdateRangeIndicator();
+    }
+
+    public void AddProjectilesPerShotBonus(int bonus)
+    {
+        projectilesPerShotBonus += bonus;
+    }
+
+    public void RemoveProjectilesPerShotBonus(int bonus)
+    {
+        projectilesPerShotBonus -= bonus;
+    }
+
+    
+
+    #endregion
+
+    #region Upgrade System
     public bool CanUpgrade(int path)
     {
         if (upgradePaths == null || path < 0 || path >= upgradePaths.Length || upgradePaths[path].upgrades == null)
             return false;
-
-        // Check if already at max for this path
         if (upgradeTiers[path] >= maxPathLevels[path])
             return false;
-
-        // Check if there are enough upgrades defined for this path
         if (upgradeTiers[path] >= upgradePaths[path].upgrades.Length)
             return false;
-
-
-   
         int upgradedOtherPaths = 0;
         for (int i = 0; i < upgradeTiers.Length; i++)
         {
@@ -233,36 +275,21 @@ public class Tower : MonoBehaviour
         }
         if (upgradedOtherPaths >= 2)
             return false;
-
-        // Bloons-style rules:
-        // Only one path can go above tier 2 (i.e., reach tier 3+)
-        // Only one path can reach tier 4 or 5
-
         int highTierCount = 0;
         for (int i = 0; i < upgradeTiers.Length; i++)
         {
             if (upgradeTiers[i] >= 3)
                 highTierCount++;
         }
-
-        // If trying to upgrade to tier 3 and another path is already 3+
         if (upgradeTiers[path] == 2 && highTierCount > 0)
             return false;
-
-        // If already at 3+ and another path is at 3+
         if (upgradeTiers[path] >= 3 && highTierCount > 1)
             return false;
-
-        // Only one path can reach 4 or 5
         if (upgradeTiers[path] >= 4)
             return false;
-
         return true;
     }
 
-    /// <summary>
-    /// Returns the next upgrade for the given path, or null if maxed.
-    /// </summary>
     public TowerUpgrade GetNextUpgrade(int path)
     {
         if (upgradePaths == null || path < 0 || path >= upgradePaths.Length || upgradePaths[path].upgrades == null)
@@ -273,55 +300,50 @@ public class Tower : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// Applies the next upgrade in the given path, if possible.
-    /// </summary>
     public bool ApplyUpgrade(int path)
     {
         if (!CanUpgrade(path)) return false;
         TowerUpgrade upgrade = GetNextUpgrade(path);
         if (upgrade == null) return false;
-
-        // Apply stat bonuses
         range += upgrade.rangeBonus;
-        fireRateBonus += upgrade.fireRateBonus; // Now accumulates bonus
+        fireRateBonus += upgrade.fireRateBonus;
         damage += upgrade.damageBonus;
-        projectilesPerShotBonus += upgrade.projectilesPerShotBonus; // New: accumulate bonus
-        spreadAngle += upgrade.spreadAngleBonus; // New: accumulate bonus
+        projectilesPerShotBonus += upgrade.projectilesPerShotBonus;
+        spreadAngle += upgrade.spreadAngleBonus;
+        projectileSizeBonus += upgrade.projectileSizeBonus;
+        
 
-        // Apply icon if provided
-        if (upgrade.icon != null && spriteRenderer != null)
+        // Add all new effects from upgrade
+        foreach (var effect in upgrade.projectileEffects)
         {
-            spriteRenderer.sprite = upgrade.icon;
+            if (!projectileEffects.Contains(effect) && effect != ProjectileEffectType.None)
+                projectileEffects.Add(effect);
         }
 
+        if (upgrade.pierceBonus > 0)
+            pierceBonus += upgrade.pierceBonus;
+
+        if (upgrade.projectileSprite != null)
+            projectileSprite = upgrade.projectileSprite;
+        if (upgrade.icon != null && spriteRenderer != null)
+            spriteRenderer.sprite = upgrade.icon;
         upgradeTiers[path]++;
         return true;
     }
 
+    #endregion
 
-    public int GetCost()
-    {
-        return cost;
-    }
-
-    public float GetRange()
-    {
-        return range;
-    }
-
-    public void SetShowRange(bool value)
-    {
-        showRange = value;
-    }
+    #region Utility & Visuals
+    public void MarkAsPlaced() => IsPlaced = true;
+    public int GetCost() => cost;
+    public float GetRange() => range;
+    public void SetShowRange(bool value) => showRange = value;
 
     public void ShowRangeIndicator()
     {
         if (rangeIndicator != null) return;
-
         rangeIndicator = new GameObject("RangeIndicator");
         rangeLineRenderer = rangeIndicator.AddComponent<LineRenderer>();
-
         rangeLineRenderer.useWorldSpace = false;
         rangeLineRenderer.startWidth = 0.1f;
         rangeLineRenderer.endWidth = 0.1f;
@@ -329,10 +351,8 @@ public class Tower : MonoBehaviour
         rangeLineRenderer.endColor = new Color(1f, 1f, 1f, 0.5f);
         rangeLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         rangeLineRenderer.sortingOrder = 0;
-
         rangeIndicator.transform.SetParent(transform);
         rangeIndicator.transform.localPosition = Vector3.zero;
-
         UpdateRangeIndicator();
     }
 
@@ -343,7 +363,6 @@ public class Tower : MonoBehaviour
         rangeLineRenderer.positionCount = segments + 1;
         float r = GetRange();
         float angle = 0f;
-
         for (int i = 0; i <= segments; i++)
         {
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * r;
@@ -351,9 +370,7 @@ public class Tower : MonoBehaviour
             rangeLineRenderer.SetPosition(i, new Vector3(x, y, 0f));
             angle += 360f / segments;
         }
-
     }
-
 
     public void HideRangeIndicator()
     {
@@ -364,7 +381,7 @@ public class Tower : MonoBehaviour
         }
     }
 
-   public int GetSellPrice()
+    public int GetSellPrice()
     {
         int totalSpent = cost;
         for (int path = 0; path < upgradeTiers.Length; path++)
@@ -373,11 +390,10 @@ public class Tower : MonoBehaviour
             {
                 TowerUpgrade upgrade = upgradePaths[path].upgrades[tier];
                 if (upgrade != null)
-                {
                     totalSpent += upgrade.cost;
-                }
             }
         }
-        return totalSpent / 2; // Sell for half the total spent
+        return totalSpent / 2;
     }
+    #endregion
 }

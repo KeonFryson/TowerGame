@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9b2f6d4280a744481ec342525251a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  startingMoney: 65000
+  startingMoney: 650
   startingLives: 100
   OnMoneyChanged:
     m_PersistentCalls:
@@ -62,10 +62,6 @@ MonoBehaviour:
   OnGameOver:
     m_PersistentCalls:
       m_Calls: []
-  gameSpeeds:
-  - 1
-  - 2
-  - 4
   OnGameSpeedChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -87,8 +83,9 @@ MonoBehaviour:
   enemyPrefabs: []
   timeBetweenWaves: 5
   timeBetweenEnemies: 0.5
-  baseEnemiesPerWave: 2
-  enemyIncreasePerWave: 1.5
+  startingWavePoints: 1
+  waveLinearScale: 2.5
+  waveQuadraticScale: 0.15
 --- !u!114 &7701841139636765560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c498c958f4bf5cd459fbba4906a75a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PathManager
-  pathMapData: {fileID: 11400000, guid: 294bad30db0869248b505fb5704903a6, type: 2}
+  pathMapData: {fileID: 0}
   pathColor: {r: 0, g: 0.7322817, b: 1, a: 1}
   showPath: 1
 --- !u!114 &4607913974503557605
