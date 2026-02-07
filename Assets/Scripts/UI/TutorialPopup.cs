@@ -29,11 +29,16 @@ public class TutorialPopup : MonoBehaviour
         if (enemy != null)
         {
             nameText.text = enemyPrefab.name;
-            statsText.text = $"HP: {enemy.Health}\nDamage: {enemy.Damage}\n Speed: {enemy.MoveSpeed}\nArmor: {enemy.Armor}\nMoneyReward: {enemy.MoneyReward}";
+            statsText.text = $"HP: {enemy.Health}\nDamage: {enemy.Damage}\nSpeed: {enemy.MoveSpeed}\nArmor: {enemy.Armor}\nMoneyReward: {enemy.MoneyReward}";
             descriptionText.text = enemy.GetDescription(); // Implement this in your Enemy class
             var sr = enemyPrefab.GetComponent<SpriteRenderer>();
             if (enemyImage != null && sr != null)
+            {
                 enemyImage.sprite = sr.sprite;
+                enemyImage.color = sr.color;
+
+            }
+           
         }
         else
         {

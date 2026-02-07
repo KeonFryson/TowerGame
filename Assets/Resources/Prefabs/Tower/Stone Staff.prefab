@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2726827490174144144}
   - component: {fileID: 922495378025188089}
   m_Layer: 7
-  m_Name: Stone Tower
+  m_Name: Stone Staff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,7 +300,7 @@ MonoBehaviour:
       projectileSprite: {fileID: 0}
       pierceBonus: 0
     - upgradeName: Ground Crack
-      description: Impacts create cracks that slow affects enemies near the hit.
+      description: Impacts create cracks that stuns affects enemy.
       cost: 240
       icon: {fileID: 0}
       rangeBonus: 0.5
@@ -309,11 +309,11 @@ MonoBehaviour:
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0
-      projectileEffects: 06000000
+      projectileEffects: 07000000
       projectileSprite: {fileID: 0}
       pierceBonus: 0
     - upgradeName: Tremor Shot
-      description: Each hit causes a small tremor, stunning enemies briefly.
+      description: Each hit causes a small tremor, enemy near by.
       cost: 550
       icon: {fileID: 8824793825499218426, guid: 55f41ddf5bdcb464cb2b2d5c24393cd3, type: 3}
       rangeBonus: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0.15
-      projectileEffects: 07000000
+      projectileEffects: 06000000
       projectileSprite: {fileID: 0}
       pierceBonus: 0
     - upgradeName: Quake Core
@@ -336,7 +336,7 @@ MonoBehaviour:
       projectilesPerShotBonus: 0
       spreadAngleBonus: 0
       projectileSizeBonus: 0.1
-      projectileEffects: 0600000008000000
+      projectileEffects: 0a00000008000000
       projectileSprite: {fileID: 0}
       pierceBonus: 0
   abilities:

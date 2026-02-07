@@ -103,9 +103,19 @@ public class CameraMovement : MonoBehaviour
         HandleEdgeScrolling();
         HandleMouseDrag();
         HandleZoom();
+
+        CenterCameraTransform();
     }
 
+    private void CenterCameraTransform()
+    {
+        if (cam == null)
+            return;
 
+        // For 2D orthographic, the camera's position is the center of the projection
+        Vector3 camPos = cam.transform.position;
+        cameraTransform.position = new Vector3(camPos.x, camPos.y, cameraTransform.position.z);
+    }
     private void HandleKeyboardMovement()
     {
         // WASD movement

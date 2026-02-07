@@ -7,8 +7,11 @@ using UnityEngine.UI;
 public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private Image previousMapImage;
+    [SerializeField] private TMPro.TextMeshProUGUI previousMapNameText;
     [SerializeField] private Image currentMapImage;
+    [SerializeField] private TMPro.TextMeshProUGUI currentMapNameText;
     [SerializeField] private Image nextMapImage;
+    [SerializeField] private TMPro.TextMeshProUGUI nextMapNameText;
     [SerializeField] private Button playButton;
 
     [System.Serializable]
@@ -114,6 +117,10 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         previousMapImage.sprite = maps[prevIndex].previewSprite;
         currentMapImage.sprite = maps[currentIndex].previewSprite;
         nextMapImage.sprite = maps[nextIndex].previewSprite;
+
+        previousMapNameText.text = maps[prevIndex].mapName;
+        currentMapNameText.text = maps[currentIndex].mapName;
+        nextMapNameText.text = maps[nextIndex].mapName;
 
         // Reset positions
         previousMapImage.rectTransform.localPosition = prevStartPos;

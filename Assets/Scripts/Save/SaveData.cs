@@ -3,13 +3,25 @@ using System.IO;
 
 public class SaveData : MonoBehaviour
 {
- 
+    public static SaveData Instance { get; private set; }
 
     private const string FileName = "savegame.json";
     private const string PlayerPrefsKey = "SaveGameData";
 
-    [System.Serializable]
 
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Persist across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate
+        }
+    }
 
     public class GameSave
     {

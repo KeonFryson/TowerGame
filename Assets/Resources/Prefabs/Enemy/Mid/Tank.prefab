@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7847288109113212204}
   - component: {fileID: 9070140444926101078}
-  - component: {fileID: 530420310578945068}
   - component: {fileID: -2868674830641408984}
+  - component: {fileID: 1417083528034957828}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -93,27 +93,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &530420310578945068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2564765092523535564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 900ba70515a86e44696d4d43835c9726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  moveSpeed: 2
-  health: 10
-  armor: 3
-  moneyReward: 5
-  damage: 5
-  cost: 10
-  description: Tank Enemy
-  tier: 2
-  spriteRenderer: {fileID: 9070140444926101078}
 --- !u!58 &-2868674830641408984
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -150,3 +129,36 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &1417083528034957828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2564765092523535564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c68629428944ee47ae201dae2f539ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tank_Enemy
+  moveSpeed: 3
+  health: 6
+  armor: 3
+  moneyReward: 7
+  damage: 1
+  cost: 4
+  armorBreakEffectPrefab: {fileID: 2733333023132316489, guid: 4e94589852d127046903b82474e4cc9c, type: 3}
+  spriteRenderer: {fileID: 0}
+  armorMaterial: {fileID: -876546973899608171, guid: 7435756367f44864bb8749599e2ba87c, type: 3}
+  defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  description: 'Tank_Enemy
+
+    ----------------------
+
+    Need Armor Break Uprade
+    to do Damage
+
+    Takes Less pushback '
+  tier: 2
+  currentHealth: 0
+  armorBreakEffect: {fileID: 864851366152803406, guid: 4e94589852d127046903b82474e4cc9c, type: 3}

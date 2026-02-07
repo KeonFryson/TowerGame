@@ -15,14 +15,14 @@ public class TowerUpgrade
     public float rangeBonus;
     public float fireRateBonus;
     public float damageBonus;
-    public int projectilesPerShotBonus; 
+    public int projectilesPerShotBonus;
     public float spreadAngleBonus;
     // Projectile bonuses/effects
     public float projectileSizeBonus;
- 
-    public List<ProjectileEffectType> projectileEffects = new List<ProjectileEffectType>(); // Multiple effects
+
+    public List<ProjectileEffectType> projectileEffects = new List<ProjectileEffectType>();
     public Sprite projectileSprite;
-    public int pierceBonus; // Add this if you want upgrades to add pierce
+    public int pierceBonus;
 }
 #endregion
 
@@ -72,7 +72,6 @@ public class Tower : MonoBehaviour
     private float projectileSizeBonus = 0f;
     [SerializeField] private List<ProjectileEffectType> projectileEffects = new List<ProjectileEffectType>();
     private Sprite projectileSprite = null;
-
     private int pierceBonus = 0;
     #endregion
 
@@ -118,6 +117,7 @@ public class Tower : MonoBehaviour
     {
         if (enemies == null || enemies.Count == 0)
             return null;
+
         switch (targetMode)
         {
             case TargetMode.First:
@@ -163,6 +163,7 @@ public class Tower : MonoBehaviour
         if (target == null) return;
         int totalProjectiles = baseProjectilesPerShot + projectilesPerShotBonus;
         if (totalProjectiles < 1) totalProjectiles = 1;
+
         if (projectilePrefab != null && projectileSpawnPoint != null)
         {
             float angleStep = totalProjectiles > 1 ? spreadAngle / (totalProjectiles - 1) : 0f;
@@ -184,12 +185,9 @@ public class Tower : MonoBehaviour
                     proj.SetTarget(target, damage, false);
                     proj.SetInitialDirection(direction);
                     proj.SetProjectileSize(0.5f + projectileSizeBonus);
-
-                    // Set all effects
                     proj.SetProjectileEffects(projectileEffects);
                     if (pierceBonus > 0)
                         proj.SetPierceCount(pierceBonus);
-
                     if (projectileSprite != null)
                         proj.SetProjectileSprite(projectileSprite);
                 }
@@ -211,51 +209,14 @@ public class Tower : MonoBehaviour
             abilities[index].Activate(this);
     }
 
-    public void AddFireRateMultiplier(float multiplier)
-    {
-        fireRateMultiplier *= multiplier;
-    }
-
-    public void RemoveFireRateMultiplier(float multiplier)
-    {
-        if (multiplier != 0f)
-            fireRateMultiplier /= multiplier;
-    }
-
-    public void AddDamageBonus(float bonus)
-    {
-        damage += bonus;
-    }
-
-    public void RemoveDamageBonus(float bonus)
-    {
-        damage -= bonus;
-    }
-
-    public void AddRangeBonus(float bonus)
-    {
-        range += bonus;
-        UpdateRangeIndicator();
-    }
-
-    public void RemoveRangeBonus(float bonus)
-    {
-        range -= bonus;
-        UpdateRangeIndicator();
-    }
-
-    public void AddProjectilesPerShotBonus(int bonus)
-    {
-        projectilesPerShotBonus += bonus;
-    }
-
-    public void RemoveProjectilesPerShotBonus(int bonus)
-    {
-        projectilesPerShotBonus -= bonus;
-    }
-
-    
-
+    public void AddFireRateMultiplier(float multiplier) => fireRateMultiplier *= multiplier;
+    public void RemoveFireRateMultiplier(float multiplier) { if (multiplier != 0f) fireRateMultiplier /= multiplier; }
+    public void AddDamageBonus(float bonus) => damage += bonus;
+    public void RemoveDamageBonus(float bonus) => damage -= bonus;
+    public void AddRangeBonus(float bonus) { range += bonus; UpdateRangeIndicator(); }
+    public void RemoveRangeBonus(float bonus) { range -= bonus; UpdateRangeIndicator(); }
+    public void AddProjectilesPerShotBonus(int bonus) => projectilesPerShotBonus += bonus;
+    public void RemoveProjectilesPerShotBonus(int bonus) => projectilesPerShotBonus -= bonus;
     #endregion
 
     #region Upgrade System
@@ -311,9 +272,7 @@ public class Tower : MonoBehaviour
         projectilesPerShotBonus += upgrade.projectilesPerShotBonus;
         spreadAngle += upgrade.spreadAngleBonus;
         projectileSizeBonus += upgrade.projectileSizeBonus;
-        
 
-        // Add all new effects from upgrade
         foreach (var effect in upgrade.projectileEffects)
         {
             if (!projectileEffects.Contains(effect) && effect != ProjectileEffectType.None)
@@ -330,7 +289,6 @@ public class Tower : MonoBehaviour
         upgradeTiers[path]++;
         return true;
     }
-
     #endregion
 
     #region Utility & Visuals

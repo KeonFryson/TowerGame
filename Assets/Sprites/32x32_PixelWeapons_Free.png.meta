@@ -381,6 +381,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -388,10 +401,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 419
-        width: 24
-        height: 24
+        x: 0
+        y: 416
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -410,10 +423,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 418
-        width: 28
-        height: 28
+        x: 32
+        y: 416
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -432,10 +445,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_2
       rect:
         serializedVersion: 2
-        x: 66
-        y: 417
-        width: 27
-        height: 28
+        x: 64
+        y: 416
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -454,10 +467,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_3
       rect:
         serializedVersion: 2
-        x: 99
-        y: 421
-        width: 25
-        height: 25
+        x: 96
+        y: 416
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -476,10 +489,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_4
       rect:
         serializedVersion: 2
-        x: 133
-        y: 418
-        width: 23
-        height: 28
+        x: 128
+        y: 416
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -498,10 +511,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_5
       rect:
         serializedVersion: 2
-        x: 194
-        y: 418
-        width: 29
-        height: 28
+        x: 192
+        y: 416
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -520,10 +533,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_6
       rect:
         serializedVersion: 2
-        x: 4
-        y: 389
-        width: 25
-        height: 25
+        x: 0
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -542,10 +555,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_7
       rect:
         serializedVersion: 2
-        x: 34
-        y: 386
-        width: 29
-        height: 29
+        x: 32
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -564,10 +577,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_8
       rect:
         serializedVersion: 2
-        x: 66
-        y: 386
-        width: 28
-        height: 28
+        x: 64
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -586,10 +599,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_9
       rect:
         serializedVersion: 2
-        x: 98
-        y: 386
-        width: 28
-        height: 28
+        x: 96
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -608,10 +621,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_10
       rect:
         serializedVersion: 2
-        x: 131
-        y: 387
-        width: 26
-        height: 26
+        x: 128
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -630,10 +643,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_11
       rect:
         serializedVersion: 2
-        x: 164
-        y: 386
-        width: 23
-        height: 28
+        x: 160
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -652,10 +665,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_12
       rect:
         serializedVersion: 2
-        x: 194
-        y: 386
-        width: 29
-        height: 29
+        x: 192
+        y: 384
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -674,10 +687,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_13
       rect:
         serializedVersion: 2
-        x: 3
-        y: 355
-        width: 24
-        height: 26
+        x: 0
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -696,10 +709,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_14
       rect:
         serializedVersion: 2
-        x: 34
-        y: 354
-        width: 29
-        height: 29
+        x: 32
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -718,10 +731,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_15
       rect:
         serializedVersion: 2
-        x: 66
-        y: 354
-        width: 28
-        height: 28
+        x: 64
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -740,10 +753,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_16
       rect:
         serializedVersion: 2
-        x: 98
-        y: 354
-        width: 28
-        height: 28
+        x: 96
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -762,10 +775,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_17
       rect:
         serializedVersion: 2
-        x: 131
-        y: 354
-        width: 26
-        height: 28
+        x: 128
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -784,10 +797,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_18
       rect:
         serializedVersion: 2
-        x: 167
-        y: 356
-        width: 16
-        height: 24
+        x: 160
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -806,10 +819,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_19
       rect:
         serializedVersion: 2
-        x: 193
-        y: 354
-        width: 28
-        height: 28
+        x: 192
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -828,10 +841,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_20
       rect:
         serializedVersion: 2
-        x: 231
-        y: 358
-        width: 18
-        height: 20
+        x: 224
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -850,10 +863,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_21
       rect:
         serializedVersion: 2
-        x: 261
-        y: 359
-        width: 23
-        height: 19
+        x: 256
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -872,10 +885,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_22
       rect:
         serializedVersion: 2
-        x: 293
-        y: 357
-        width: 22
-        height: 23
+        x: 288
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -894,10 +907,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_23
       rect:
         serializedVersion: 2
-        x: 322
-        y: 357
-        width: 15
-        height: 18
+        x: 320
+        y: 352
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -916,10 +929,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_24
       rect:
         serializedVersion: 2
-        x: 337
-        y: 357
-        width: 12
-        height: 18
+        x: 0
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -938,10 +951,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_25
       rect:
         serializedVersion: 2
-        x: 4
-        y: 323
-        width: 25
-        height: 26
+        x: 32
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -960,10 +973,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_26
       rect:
         serializedVersion: 2
-        x: 34
-        y: 322
-        width: 29
-        height: 29
+        x: 64
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -982,10 +995,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_27
       rect:
         serializedVersion: 2
-        x: 66
-        y: 323
-        width: 27
-        height: 25
+        x: 96
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1004,10 +1017,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_29
       rect:
         serializedVersion: 2
-        x: 98
-        y: 322
-        width: 29
-        height: 29
+        x: 160
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1026,10 +1039,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_30
       rect:
         serializedVersion: 2
-        x: 132
-        y: 322
-        width: 24
-        height: 28
+        x: 192
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1048,10 +1061,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_31
       rect:
         serializedVersion: 2
-        x: 163
-        y: 321
-        width: 26
-        height: 30
+        x: 0
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1070,10 +1083,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_32
       rect:
         serializedVersion: 2
-        x: 195
-        y: 321
-        width: 26
-        height: 30
+        x: 32
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1092,10 +1105,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_33
       rect:
         serializedVersion: 2
-        x: 4
-        y: 290
-        width: 24
-        height: 26
+        x: 64
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1114,10 +1127,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_34
       rect:
         serializedVersion: 2
-        x: 34
-        y: 289
-        width: 28
-        height: 30
+        x: 96
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1136,10 +1149,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_35
       rect:
         serializedVersion: 2
-        x: 66
-        y: 290
-        width: 28
-        height: 27
+        x: 128
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1158,10 +1171,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_36
       rect:
         serializedVersion: 2
-        x: 99
-        y: 291
-        width: 27
-        height: 27
+        x: 160
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1180,10 +1193,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_37
       rect:
         serializedVersion: 2
-        x: 131
-        y: 291
-        width: 26
-        height: 28
+        x: 192
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1202,10 +1215,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_38
       rect:
         serializedVersion: 2
-        x: 163
-        y: 291
-        width: 26
-        height: 26
+        x: 0
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1224,10 +1237,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_39
       rect:
         serializedVersion: 2
-        x: 194
-        y: 289
-        width: 28
-        height: 29
+        x: 32
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1246,10 +1259,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_40
       rect:
         serializedVersion: 2
-        x: 2
-        y: 259
-        width: 26
-        height: 26
+        x: 64
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1268,10 +1281,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_41
       rect:
         serializedVersion: 2
-        x: 34
-        y: 257
-        width: 29
-        height: 29
+        x: 96
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1290,10 +1303,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_42
       rect:
         serializedVersion: 2
-        x: 66
-        y: 258
-        width: 28
-        height: 28
+        x: 128
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1312,10 +1325,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_43
       rect:
         serializedVersion: 2
-        x: 97
-        y: 258
-        width: 29
-        height: 29
+        x: 160
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1334,10 +1347,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_44
       rect:
         serializedVersion: 2
-        x: 134
-        y: 258
-        width: 20
-        height: 27
+        x: 192
+        y: 256
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1356,10 +1369,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_45
       rect:
         serializedVersion: 2
-        x: 164
-        y: 258
-        width: 25
-        height: 28
+        x: 0
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1378,10 +1391,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_46
       rect:
         serializedVersion: 2
-        x: 192
-        y: 257
-        width: 30
-        height: 30
+        x: 32
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1400,10 +1413,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_47
       rect:
         serializedVersion: 2
-        x: 3
-        y: 227
-        width: 25
-        height: 26
+        x: 64
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1422,10 +1435,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_48
       rect:
         serializedVersion: 2
-        x: 34
-        y: 226
-        width: 29
-        height: 29
+        x: 96
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1444,10 +1457,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_49
       rect:
         serializedVersion: 2
-        x: 66
-        y: 226
-        width: 28
-        height: 28
+        x: 128
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1466,10 +1479,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_50
       rect:
         serializedVersion: 2
-        x: 98
-        y: 226
-        width: 29
-        height: 29
+        x: 160
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1488,10 +1501,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_51
       rect:
         serializedVersion: 2
-        x: 131
-        y: 228
-        width: 26
-        height: 26
+        x: 192
+        y: 224
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1510,10 +1523,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_52
       rect:
         serializedVersion: 2
-        x: 164
-        y: 227
-        width: 25
-        height: 26
+        x: 0
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1532,10 +1545,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_53
       rect:
         serializedVersion: 2
-        x: 194
-        y: 226
-        width: 29
-        height: 28
+        x: 32
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1554,10 +1567,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_54
       rect:
         serializedVersion: 2
-        x: 3
-        y: 194
-        width: 26
-        height: 26
+        x: 64
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1576,10 +1589,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_55
       rect:
         serializedVersion: 2
-        x: 34
-        y: 194
-        width: 28
-        height: 28
+        x: 96
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1598,10 +1611,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_56
       rect:
         serializedVersion: 2
-        x: 66
-        y: 194
-        width: 26
-        height: 26
+        x: 128
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1620,10 +1633,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_58
       rect:
         serializedVersion: 2
-        x: 97
-        y: 193
-        width: 30
-        height: 30
+        x: 0
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1642,10 +1655,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_59
       rect:
         serializedVersion: 2
-        x: 132
-        y: 195
-        width: 24
-        height: 28
+        x: 32
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1664,10 +1677,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_60
       rect:
         serializedVersion: 2
-        x: 193
-        y: 193
-        width: 30
-        height: 30
+        x: 64
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1686,10 +1699,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_61
       rect:
         serializedVersion: 2
-        x: 3
-        y: 163
-        width: 23
-        height: 26
+        x: 96
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1708,10 +1721,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_62
       rect:
         serializedVersion: 2
-        x: 34
-        y: 162
-        width: 29
-        height: 29
+        x: 128
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1730,10 +1743,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_63
       rect:
         serializedVersion: 2
-        x: 66
-        y: 162
-        width: 28
-        height: 28
+        x: 160
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1752,10 +1765,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_64
       rect:
         serializedVersion: 2
-        x: 97
-        y: 162
-        width: 30
-        height: 30
+        x: 192
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1774,10 +1787,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_65
       rect:
         serializedVersion: 2
-        x: 135
-        y: 162
-        width: 18
-        height: 28
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1796,10 +1809,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_66
       rect:
         serializedVersion: 2
-        x: 163
-        y: 164
-        width: 26
-        height: 26
+        x: 32
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1818,10 +1831,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_67
       rect:
         serializedVersion: 2
-        x: 196
-        y: 164
-        width: 21
-        height: 25
+        x: 64
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1840,10 +1853,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_68
       rect:
         serializedVersion: 2
-        x: 3
-        y: 131
-        width: 23
-        height: 26
+        x: 96
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1862,10 +1875,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_69
       rect:
         serializedVersion: 2
-        x: 34
-        y: 130
-        width: 29
-        height: 28
+        x: 128
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1884,10 +1897,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_70
       rect:
         serializedVersion: 2
-        x: 66
-        y: 130
-        width: 27
-        height: 27
+        x: 192
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1906,10 +1919,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_72
       rect:
         serializedVersion: 2
-        x: 97
-        y: 129
-        width: 30
-        height: 30
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1928,10 +1941,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_73
       rect:
         serializedVersion: 2
-        x: 133
-        y: 131
-        width: 22
-        height: 27
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1950,10 +1963,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_74
       rect:
         serializedVersion: 2
-        x: 194
-        y: 130
-        width: 28
-        height: 29
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1972,10 +1985,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_75
       rect:
         serializedVersion: 2
-        x: 4
-        y: 97
-        width: 23
-        height: 26
+        x: 128
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1994,10 +2007,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_76
       rect:
         serializedVersion: 2
-        x: 34
-        y: 97
-        width: 28
-        height: 28
+        x: 192
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2016,10 +2029,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_77
       rect:
         serializedVersion: 2
-        x: 66
-        y: 97
-        width: 28
-        height: 28
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2038,10 +2051,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_78
       rect:
         serializedVersion: 2
-        x: 97
-        y: 96
-        width: 30
-        height: 30
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2060,10 +2073,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_79
       rect:
         serializedVersion: 2
-        x: 132
-        y: 98
-        width: 24
-        height: 28
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2082,10 +2095,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_80
       rect:
         serializedVersion: 2
-        x: 198
-        y: 101
-        width: 17
-        height: 18
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2104,10 +2117,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_81
       rect:
         serializedVersion: 2
-        x: 4
-        y: 65
-        width: 24
-        height: 26
+        x: 128
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2126,10 +2139,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_82
       rect:
         serializedVersion: 2
-        x: 34
-        y: 65
-        width: 28
-        height: 28
+        x: 192
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2148,10 +2161,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_83
       rect:
         serializedVersion: 2
-        x: 66
-        y: 65
-        width: 27
-        height: 29
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2170,10 +2183,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_85
       rect:
         serializedVersion: 2
-        x: 98
-        y: 65
-        width: 28
-        height: 28
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2192,10 +2205,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_86
       rect:
         serializedVersion: 2
-        x: 135
-        y: 70
-        width: 18
-        height: 18
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2214,10 +2227,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_87
       rect:
         serializedVersion: 2
-        x: 193
-        y: 64
-        width: 30
-        height: 30
+        x: 128
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2236,10 +2249,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_88
       rect:
         serializedVersion: 2
-        x: 4
-        y: 36
-        width: 25
-        height: 23
+        x: 160
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2258,10 +2271,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_89
       rect:
         serializedVersion: 2
-        x: 33
-        y: 33
-        width: 29
-        height: 27
+        x: 192
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2280,10 +2293,10 @@ TextureImporter:
       name: 32x32_PixelWeapons_Free_90
       rect:
         serializedVersion: 2
-        x: 65
-        y: 33
-        width: 28
-        height: 28
+        x: 224
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2299,111 +2312,89 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x32_PixelWeapons_Free_91
+      name: 32x32_PixelWeapons_Free_28
       rect:
         serializedVersion: 2
-        x: 98
-        y: 34
-        width: 28
-        height: 28
+        x: 128
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ee67c1de644fbd3d0800000000000000
-      internalID: -3180680126344169746
+      spriteID: 268465158317fef499b4305ab4c2f718
+      internalID: -8582435088932248154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x32_PixelWeapons_Free_92
+      name: 32x32_PixelWeapons_Free_57
       rect:
         serializedVersion: 2
-        x: 134
-        y: 36
-        width: 21
-        height: 24
+        x: 192
+        y: 192
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 502272439169644f0800000000000000
-      internalID: -844822845092060667
+      spriteID: f2f78db5e2202be45b850221f5a6f543
+      internalID: 5173345782052284940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x32_PixelWeapons_Free_93
+      name: 32x32_PixelWeapons_Free_71
       rect:
         serializedVersion: 2
-        x: 166
-        y: 36
-        width: 18
-        height: 24
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: efbbb70cd22bcb4c0800000000000000
-      internalID: -4270342437081465858
+      spriteID: 0995a2bc267c0ca4f8035af48aab7881
+      internalID: -800643161200648610
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x32_PixelWeapons_Free_94
+      name: 32x32_PixelWeapons_Free_84
       rect:
         serializedVersion: 2
-        x: 196
-        y: 33
-        width: 25
-        height: 30
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0c53cdab50cb14350800000000000000
-      internalID: 5999282911430063552
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 32x32_PixelWeapons_Free_95
-      rect:
-        serializedVersion: 2
-        x: 231
-        y: 4
-        width: 18
-        height: 22
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 52267c80aecfdd7a0800000000000000
-      internalID: -6350641817422699995
+      spriteID: f195a801ef39b264996163c5a757f5be
+      internalID: 5821159235125898767
       vertices: []
       indices: 
       edges: []
@@ -2420,7 +2411,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":13.0,"y":13.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       32x32_PixelWeapons_Free_0: -2262602574866384894
       32x32_PixelWeapons_Free_1: 1074689420854597584
@@ -2513,11 +2506,6 @@ TextureImporter:
       32x32_PixelWeapons_Free_89: -4343226199388876039
       32x32_PixelWeapons_Free_9: 3448129384076546144
       32x32_PixelWeapons_Free_90: 8651224633530117496
-      32x32_PixelWeapons_Free_91: -3180680126344169746
-      32x32_PixelWeapons_Free_92: -844822845092060667
-      32x32_PixelWeapons_Free_93: -4270342437081465858
-      32x32_PixelWeapons_Free_94: 5999282911430063552
-      32x32_PixelWeapons_Free_95: -6350641817422699995
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

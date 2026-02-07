@@ -2,8 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
+    // --- Stats ---
     [Header("Stats")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private int health = 1;
@@ -12,46 +13,57 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private int cost = 1;
 
-    public int Health => health;
-    public float MoveSpeed => moveSpeed;
+    // --- Effects ---
+    [Header("Effects")]
+    [SerializeField] private GameObject armorBreakEffectPrefab;
 
-    public int Armor => armor;
+    // --- Visual ---
+    [Header("Visual")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Material armorMaterial;
+    [SerializeField] private Material defaultMaterial;
 
-    public int MoneyReward => moneyReward;
-
-    public int Damage => damage;
-
-
+    // --- Description ---
     [Header("Description")]
     [TextArea]
     [SerializeField] private string description;
 
-    public string GetDescription()
-    {
-        return description;
-    }
-
-
+    // --- Tier ---
     [Header("Tier")]
     [SerializeField] private EnemyTier tier;
 
-    [Header("Visual")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
-
+    // --- State ---
+    private bool isDead = false;
     private int currentNodeIndex = 0;
-    private float currentHealth;
+    [SerializeField] private float currentHealth;
+    private float baseMoveSpeed;
+    private bool isStunned = false;
+    private float slowMultiplier = 1f;
+    private EnemyEffects effects;
 
+    // --- Properties ---
+    public bool IsDead => isDead;
+    public int Health => health;
+    public float MoveSpeed => moveSpeed;
+    public int Armor => armor;
+    public int MoneyReward => moneyReward;
+    public int Damage => damage;
+    public float CurrentHealth => currentHealth;
     public int Cost => cost;
     public EnemyTier Tier => tier;
 
-    private void Start()
-    {
-        currentHealth = health;
+    public string GetDescription() => description;
 
+    // --- Unity Lifecycle ---
+    protected virtual void Start()
+    {
+        baseMoveSpeed = moveSpeed;
+        currentHealth = health;
         if (spriteRenderer == null)
-        {
             spriteRenderer = GetComponent<SpriteRenderer>();
-        }
+
+        effects = new EnemyEffects(this, spriteRenderer, armorBreakEffectPrefab);
+        UpdateArmorVisual();
 
         if (PathManager.Instance != null && PathManager.Instance.GetWaypointCount() > 0)
         {
@@ -60,12 +72,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         MoveAlongPath();
     }
 
-    private void MoveAlongPath()
+    // --- Path Movement ---
+    protected virtual void MoveAlongPath()
     {
         if (PathManager.Instance == null)
         {
@@ -84,7 +97,6 @@ public class Enemy : MonoBehaviour
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
 
-        // Use a slightly larger threshold and snap to target
         if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
         {
             transform.position = targetPosition;
@@ -101,139 +113,92 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // --- Damage & Death ---
     public void TakeDamage(float damageAmount)
     {
-        // Subtract armor from incoming damage
-        float effectiveDamage = damageAmount - armor;
-        if (effectiveDamage < 0f)
-            effectiveDamage = 0f; // Prevent healing from negative damage
+        if (isDead) return;
 
-        currentHealth -= effectiveDamage;
+        if (armor > 0)
+        {
+            if (damageAmount > armor)
+            {
+                armor -= 1;
+                if (armor < 0) armor = 0;
+                UpdateArmorVisual();
+                Debug.Log($"[Enemy] Damage ({damageAmount}) > armor. Armor reduced by 1. New Armor: {armor}");
+            }
+            else
+            {
+                // Damage is less than or equal to armor, do nothing
+                Debug.Log($"[Enemy] Damage ({damageAmount}) <= armor ({armor}). No effect.");
+            }
+        }
+        else
+        {
+            currentHealth -= damageAmount;
+            Debug.Log($"[Enemy] No armor. Damage to health: {damageAmount}, New Health: {currentHealth}");
+        }
 
         if (currentHealth <= 0)
         {
             Die();
         }
     }
-    private void Die()
-    {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.AddMoney(moneyReward);
-        }
 
-        if (WaveManager.Instance != null)
-        {
-            WaveManager.Instance.OnEnemyDefeated();
-        }
+    protected virtual void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        GameManager.Instance?.AddMoney(moneyReward);
+        WaveManager.Instance?.OnEnemyDefeated();
 
         Destroy(gameObject);
     }
 
-    private void ReachEnd()
+    protected virtual void ReachEnd()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.LoseLife(damage);
-        }
-        if (WaveManager.Instance != null)
-        {
-            WaveManager.Instance.OnEnemyDefeated();
-        }
+        if (isDead) return;
+        isDead = true;
+
+        GameManager.Instance?.LoseLife(damage);
+        WaveManager.Instance?.OnEnemyDefeated();
+
         Destroy(gameObject);
     }
 
-    public Vector3 GetPosition()
+    // --- Utility ---
+    public Vector3 GetPosition() => transform.position;
+
+    // --- Effects API ---
+    public void ApplyPoison(float damagePerSecond, int ticks, float interval) => effects.ApplyPoison(damagePerSecond, ticks, interval);
+    public virtual void ApplyBurn(float damagePerSecond, int ticks, float interval) => effects.ApplyBurn(damagePerSecond, ticks, interval);
+    public void ApplyFreeze(float slowPercentage, float duration) => effects.ApplyFreeze(slowPercentage, duration);
+    public virtual void ApplySlow(float slowAmount, float duration) => effects.ApplySlow(slowAmount, duration);
+    public virtual void ApplyStun(float duration) => effects.ApplyStun(duration);
+    public virtual void ApplyArmorBreak(int amount, float duration) => effects.ApplyArmorBreak(amount, duration);
+
+    // --- MoveSpeed Coordination ---
+    public void UpdateMoveSpeed()
     {
-        return transform.position;
+        moveSpeed = isStunned ? 0f : baseMoveSpeed * slowMultiplier;
     }
 
-    public void ApplyPoison(float damagePerSecond, int ticks, float interval)
-    {
-        StartCoroutine(PoisonCoroutine(damagePerSecond, ticks, interval));
-        StartCoroutine(ColorCoroutine(Color.green, interval));
+    public float GetSlowMultiplier() => slowMultiplier;
+    public void SetSlowMultiplier(float value) => slowMultiplier = value;
+    public void SetStunned(bool value) => isStunned = value;
+    public void SetArmor(int value) => armor = value;
+    public virtual void SetCurrentNodeIndex(int nodeIndex) => currentNodeIndex = nodeIndex;
 
-    }
-
-    private  IEnumerator PoisonCoroutine(float damagePerSecond, int ticks, float interval)
-    {
-        for (int i = 0; i < ticks; i++)
-        {
-            TakeDamage(damagePerSecond * interval);
-            yield return new WaitForSeconds(interval);
-        }
-    }
-
-
-    public void ApplyBurn(float damagePerSecond, int ticks, float interval)
-    {
-        StartCoroutine(PoisonCoroutine(damagePerSecond, ticks, interval));
-        StartCoroutine(ColorCoroutine(Color.red, interval));
-    }
-
-    private IEnumerator ColorCoroutine(Color color, float duration)
-    {
-        if (spriteRenderer != null)
-        {
-            Color originalColor = spriteRenderer.color;
-            spriteRenderer.color = color;
-            float elapsed = 0f;
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            spriteRenderer.color = originalColor;
-        }
-    }
-
-
-
-    public void ApplyFreeze(float slowPercentage, float duration)
-    {
-        StartCoroutine(SlowCoroutine(slowPercentage, duration));
-        StartCoroutine(ColorCoroutine(Color.lavenderBlush, duration));
-    }
-    private  IEnumerator SlowCoroutine(float slowPercentage, float duration)
-    {
-        float originalSpeed = moveSpeed;
-        moveSpeed *= (1f - slowPercentage);
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        moveSpeed = originalSpeed;
-    }
-    public void SetCurrentNodeIndex(int nodeIndex)
-    {
-        currentNodeIndex = nodeIndex;
-    }
-    public void ApplyPushback(Vector3 direction, float force)
+    // --- Pushback ---
+    public virtual void ApplyPushback(Vector3 direction, float force)
     {
         transform.position += direction * force;
-
-        // Snap to nearest path node after pushback
-        if (PathManager.Instance != null)
-        {
-            int closestNode = 0;
-            float closestDist = float.MaxValue;
-            int nodeCount = PathManager.Instance.GetWaypointCount();
-            for (int i = 0; i < nodeCount; i++)
-            {
-                float dist = Vector3.Distance(transform.position, PathManager.Instance.GetWaypoint(i));
-                if (dist < closestDist)
-                {
-                    closestDist = dist;
-                    closestNode = i;
-                }
-            }
-            SetCurrentNodeIndex(closestNode);
-        }
+        ClampToPath();
     }
 
-    public void SetColor (Color color)
+    // --- Visual ---
+    public virtual void SetColor(Color color)
     {
         if (spriteRenderer != null)
         {
@@ -241,48 +206,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void ApplyArmorBreak(int amount, float duration)
+    public void UpdateArmorVisual()
     {
-        StartCoroutine(ArmorBreakCoroutine(amount, duration));
-    }
-
-    private IEnumerator ArmorBreakCoroutine(int amount, float duration)
-    {
-        // Directly modify the armor field since it now exists in this class
-        armor -= amount;
-        StartCoroutine(ColorCoroutine(Color.gray, duration));
-        yield return new WaitForSeconds(duration);
-        armor += amount;
-    }
-
-    // Slows the enemy by a percentage for a duration (0.2f = 20% slow)
-    public void ApplySlow(float slowAmount, float duration)
-    {
-        StartCoroutine(SlowCoroutine(slowAmount, duration));
-        StartCoroutine(ColorCoroutine(Color.cyan, duration));
-    }
-
-    // Stuns the enemy for a duration (sets moveSpeed to 0)
-    public void ApplyStun(float duration)
-    {
-        StartCoroutine(StunCoroutine(duration));
-        StartCoroutine(ColorCoroutine(Color.yellow, duration));
-    }
-
-    private IEnumerator StunCoroutine(float duration)
-    {
-        float originalSpeed = moveSpeed;
-        moveSpeed = 0f;
-        float elapsed = 0f;
-        while (elapsed < duration)
+        if (spriteRenderer != null)
         {
-            elapsed += Time.deltaTime;
-            yield return null;
+            spriteRenderer.material = (armor > 0 && armorMaterial != null) ? armorMaterial : defaultMaterial;
         }
-        moveSpeed = originalSpeed;
     }
 
-    // Utility for AoE effects: can be called from Projectile
+    // --- AoE Effect ---
     public static void ApplyAoEEffect(Vector3 position, float radius, System.Action<Enemy> effect)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(position, radius);
@@ -292,6 +224,45 @@ public class Enemy : MonoBehaviour
             if (e != null)
                 effect(e);
         }
+    }
+
+    public void ClampToPath()
+    {
+        if (PathManager.Instance == null)
+            return;
+
+        int nodeCount = PathManager.Instance.GetWaypointCount();
+        if (nodeCount < 2)
+            return;
+
+        Vector3 closestPoint = transform.position;
+        float closestDist = float.MaxValue;
+
+        // Find the closest point on any path segment
+        for (int i = 0; i < nodeCount - 1; i++)
+        {
+            Vector3 a = PathManager.Instance.GetWaypoint(i);
+            Vector3 b = PathManager.Instance.GetWaypoint(i + 1);
+            Vector3 projected = ProjectPointOnLineSegment(a, b, transform.position);
+            float dist = Vector3.Distance(transform.position, projected);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closestPoint = projected;
+            }
+        }
+
+        transform.position = closestPoint;
+    }
+
+    private Vector3 ProjectPointOnLineSegment(Vector3 a, Vector3 b, Vector3 p)
+    {
+        Vector3 ap = p - a;
+        Vector3 ab = b - a;
+        float ab2 = ab.sqrMagnitude;
+        float ap_ab = Vector3.Dot(ap, ab);
+        float t = Mathf.Clamp01(ap_ab / ab2);
+        return a + ab * t;
     }
 }
 

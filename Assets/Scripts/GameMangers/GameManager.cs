@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
         currentMoney = startingMoney;
         currentLives = startingLives;
         SetGameSpeed(0);
+
+        
     }
 
     private void Start()
@@ -107,6 +109,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over!");
         OnGameOver?.Invoke();
         CameraMovement.Instance.enabled = false;
+        PauseGame();
         winLoseUI.ShowLose();
         
 
@@ -119,6 +122,7 @@ public class GameManager : MonoBehaviour
         OnGameOver?.Invoke();
         Debug.Log("You Win!");
         CameraMovement.Instance.enabled = false;
+        PauseGame();
         winLoseUI.ShowWin();
         
     }

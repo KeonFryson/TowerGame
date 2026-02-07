@@ -12,16 +12,22 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private float timeBetweenEnemies = 0.5f;
 
+    public List<GameObject> EnemyPrefabs => enemyPrefabs;
+
+
     [Header("Wave Points Formula")]
     [SerializeField] private float startingWavePoints = 10f;
     [SerializeField] private float waveLinearScale = 2.5f;
     [SerializeField] private float waveQuadraticScale = 0.15f;
 
+    [Header("Wave Mode")]
+    [SerializeField] private bool useScriptedWave = false;
+
     [Header("Tutorial")]
     [SerializeField] private bool enableTutorial = true;
     [SerializeField] private TutorialPopup tutorialPopupPrefab;
 
-    private SaveData saveData;
+    
 
     private int currentWave = 0;
     private bool waveInProgress = false;
@@ -43,9 +49,9 @@ public class WaveManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Find SaveData in the scene
-        saveData = FindFirstObjectByType<SaveData>();
-        if (saveData != null && saveData.LoadTutorialCompleted())
+        
+        
+        if (SaveData.Instance != null && SaveData.Instance.LoadTutorialCompleted())
         {
             enableTutorial = false;
         }
@@ -53,15 +59,27 @@ public class WaveManager : MonoBehaviour
         enemyPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemy").ToList();
         Debug.Log($"Loaded {enemyPrefabs.Count} enemy prefabs from Resources/Prefabs/Enemy");
 
-        foreach (var prefab in enemyPrefabs)
-        {
-            Debug.Log($"Loaded prefab: {prefab.name}");
-        }
+        //foreach (var prefab in enemyPrefabs)
+        //{
+        //    Debug.Log($"Loaded prefab: {prefab.name}");
+        //}
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Toggle Wave Mode")]
+    public void ToggleWaveMode()
+    {
+        useScriptedWave = !useScriptedWave;
+        Debug.Log("Wave mode set to: " + (useScriptedWave ? "Scripted" : "Procedural"));
+    }
+#endif
 
     private void Start()
     {
-        StartCoroutine(WaveRoutine());
+        if (!useScriptedWave)
+        {
+            StartCoroutine(WaveRoutine());
+        }
     }
 
     private IEnumerator WaveRoutine()
@@ -212,16 +230,15 @@ public class WaveManager : MonoBehaviour
                     // Check if all enemy types have been seen
                     if (seenEnemyTypes.Count == enemyPrefabs.Count)
                     {
-                        if (saveData != null)
-                        {
-                            saveData.SaveTutorialCompleted(true);
-                        }
+                         SaveData.Instance.SaveTutorialCompleted(true);
                     }
                 }
             }
 
+            
             Instantiate(prefab, spawnPos, Quaternion.identity);
             enemiesAlive++;
+            
 
             yield return new WaitForSeconds(timeBetweenEnemies);
         }
@@ -270,10 +287,74 @@ public class WaveManager : MonoBehaviour
     public void OnEnemyDefeated()
     {
         enemiesAlive = Mathf.Max(0, enemiesAlive - 1);
+        Debug.Log("Enemy defeated. Enemies alive: " + enemiesAlive);
     }
 
     public int GetCurrentWave()
     {
         return currentWave;
+    }
+
+   
+
+    /// <summary>
+    /// Spawns a scripted wave using a specific sequence of enemy prefabs.
+    /// </summary>
+    /// <param name="scriptedEnemies">The list of enemy prefabs to spawn in order.</param>
+    public void StartScriptedWave(List<GameObject> scriptedEnemies)
+    {
+        if (scriptedEnemies == null || scriptedEnemies.Count == 0)
+        {
+            Debug.LogWarning("StartScriptedWave called with empty or null list.");
+            return;
+        }
+        StartCoroutine(SpawnScriptedWave(scriptedEnemies));
+    }
+
+    private IEnumerator SpawnScriptedWave(List<GameObject> scriptedEnemies)
+    {
+        waveInProgress = true;
+        foreach (var prefab in scriptedEnemies)
+        {
+            Vector3 spawnPos = PathManager.Instance != null ? PathManager.Instance.GetWaypoint(0) : Vector3.zero;
+
+            // Tutorial: Check for new enemy type
+            if (enableTutorial)
+            {
+                string enemyType = prefab.name;
+                if (!seenEnemyTypes.Contains(enemyType))
+                {
+                    seenEnemyTypes.Add(enemyType);
+                    yield return StartCoroutine(ShowTutorialForEnemy(prefab));
+                }
+            }
+
+            Instantiate(prefab, spawnPos, Quaternion.identity);
+            enemiesAlive++;
+
+            yield return new WaitForSeconds(timeBetweenEnemies);
+        }
+
+        // Wait until all enemies are defeated before ending the wave
+        while (enemiesAlive > 0)
+        {
+            yield return null;
+        }
+        waveInProgress = false;
+    }
+
+    /// <summary>
+    /// Spawns a scripted wave with a single enemy prefab.
+    /// </summary>
+    /// <param name="enemyPrefab">The enemy prefab to spawn.</param>
+    public void StartSingleEnemyScriptedWave(GameObject enemyPrefab)
+    {
+        if (enemyPrefab == null)
+        {
+            Debug.LogWarning("StartSingleEnemyScriptedWave called with null prefab.");
+            return;
+        }
+        var singleEnemyList = new List<GameObject> { enemyPrefab };
+        StartScriptedWave(singleEnemyList);
     }
 }
