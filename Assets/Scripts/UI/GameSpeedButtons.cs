@@ -16,12 +16,12 @@ public class GameSpeedButtons : MonoBehaviour
     {
         if (speedButton != null)
         {
-            speedButton.onClick.AddListener(CycleSpeed);
+            speedButton.onClick.AddListener(OnSpeedButtonClicked);
         }
 
         if (pauseButton != null)
         {
-            pauseButton.onClick.AddListener(TogglePause);
+            pauseButton.onClick.AddListener(OnPauseButtonClicked);
         }
 
         // Subscribe to pause state changes if available
@@ -37,6 +37,32 @@ public class GameSpeedButtons : MonoBehaviour
         }
 
         UpdateSpeedButtonText();
+    }
+
+    private void OnSpeedButtonClicked()
+    {
+        if (speedButton.interactable)
+        {
+            AudioManager.Instance.PlayButtonClick();
+            CycleSpeed();
+        }
+        else
+        {
+            AudioManager.Instance.PlayButtonDisabled();
+        }
+    }
+
+    private void OnPauseButtonClicked()
+    {
+        if (pauseButton.interactable)
+        {
+            AudioManager.Instance.PlayButtonClick();
+            TogglePause();
+        }
+        else
+        {
+            AudioManager.Instance.PlayButtonDisabled();
+        }
     }
 
     private void CycleSpeed()

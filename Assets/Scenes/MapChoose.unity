@@ -67888,6 +67888,7 @@ GameObject:
   - component: {fileID: 329117474}
   - component: {fileID: 329117473}
   - component: {fileID: 329117472}
+  - component: {fileID: 329117477}
   - component: {fileID: 329117471}
   - component: {fileID: 329117476}
   m_Layer: 5
@@ -68057,6 +68058,24 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1920, y: 1080}
   m_EdgeRadius: 0
+--- !u!114 &329117477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329117470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1de3f538839e79447b23ce00f4202ef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  buttonClickSound: {fileID: 8300000, guid: 522d98107b757ec4aa970b0af3722755, type: 3}
+  buttonDisabledSound: {fileID: 8300000, guid: b51f2f0533a1b514a8ee5d0c3fd2723e, type: 3}
+  towerSelectedSound: {fileID: 0}
+  enemyDeathSound: {fileID: 0}
+  towerUpgradeSound: {fileID: 0}
+  towerPlaceSound: {fileID: 0}
 --- !u!1 &389278156
 GameObject:
   m_ObjectHideFlags: 0

@@ -203,6 +203,7 @@ public class TowerPlacement : MonoBehaviour
             if (GameManager.Instance != null && GameManager.Instance.GetMoney() >= cost && GameManager.Instance.SpendMoney(cost))
             {
                 var newTowerObj = Instantiate(towerPrefab, placementPos, Quaternion.identity);
+                AudioManager.Instance.PlayTowerPlace();
                 Tower newTower = newTowerObj.GetComponent<Tower>();
                 if (newTower != null)
                 {

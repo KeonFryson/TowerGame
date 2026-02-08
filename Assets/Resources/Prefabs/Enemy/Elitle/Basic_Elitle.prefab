@@ -148,6 +148,7 @@ MonoBehaviour:
   damage: 1
   cost: 10
   armorBreakEffectPrefab: {fileID: 2733333023132316489, guid: 4e94589852d127046903b82474e4cc9c, type: 3}
+  deathSound: {fileID: 8300000, guid: 61c4941e53738d34eaf5f1200aa05a63, type: 3}
   spriteRenderer: {fileID: 0}
   armorMaterial: {fileID: -876546973899608171, guid: 7435756367f44864bb8749599e2ba87c, type: 3}
   defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}

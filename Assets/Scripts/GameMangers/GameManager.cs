@@ -45,15 +45,8 @@ public class GameManager : MonoBehaviour
             winLoseUI = FindFirstObjectByType<WInLoseUI>();
         }
 
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        Instance = this; // overwrite the old one
+
 
         currentMoney = startingMoney;
         currentLives = startingLives;

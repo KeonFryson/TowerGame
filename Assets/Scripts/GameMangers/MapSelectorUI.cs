@@ -58,15 +58,24 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
 
     private void OnPlayButtonClicked()
     {
+       AudioManager.Instance.PlayButtonClick();
         int sceneIndex = GetSelectedMapSceneIndex();
         if (sceneIndex >= 0)
         {
-            SceneManager.LoadScene(sceneIndex);
+           StartCoroutine(LoadScence(0.3f, sceneIndex));
         }
+    }
+
+    private System.Collections.IEnumerator LoadScence(float delay, int sceneIndex)
+    {
+       
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneIndex);
     }
 
     private void ShowPreviousMap(bool animate = false)
     {
+        AudioManager.Instance.PlayButtonClick(); // Play sound on snap
         currentIndex = (currentIndex - 1 + maps.Length) % maps.Length;
         if (animate)
         {
@@ -79,6 +88,7 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
             LeanTween.moveLocal(previousMapImage.gameObject, prevStartPos, 0.2f).setEaseOutCubic();
             LeanTween.moveLocal(currentMapImage.gameObject, currStartPos, 0.2f).setEaseOutCubic();
             LeanTween.moveLocal(nextMapImage.gameObject, nextStartPos, 0.2f).setEaseOutCubic();
+
         }
         else
         {
@@ -88,6 +98,7 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
 
     private void ShowNextMap(bool animate = false)
     {
+        AudioManager.Instance.PlayButtonClick(); // Play sound on snap
         currentIndex = (currentIndex + 1) % maps.Length;
         if (animate)
         {
@@ -110,6 +121,8 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     private void UpdateMapDisplay()
     {
         if (maps.Length == 0) return;
+
+        AudioManager.Instance.PlayButtonClick();
 
         int prevIndex = (currentIndex - 1 + maps.Length) % maps.Length;
         int nextIndex = (currentIndex + 1) % maps.Length;
@@ -194,6 +207,8 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         if (!isDragging) return;
         isDragging = false;
 
+        AudioManager.Instance.PlayButtonDisabled();
+
         if (Mathf.Abs(dragOffset) > dragThreshold)
         {
             if (dragOffset > 0)
@@ -203,6 +218,7 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
                 LeanTween.moveLocal(currentMapImage.gameObject, currStartPos, 0.2f).setEaseOutCubic();
                 LeanTween.moveLocal(nextMapImage.gameObject, nextStartPos, 0.2f).setEaseOutCubic()
                     .setOnComplete(() => ShowPreviousMap(false));
+
             }
             else
             {

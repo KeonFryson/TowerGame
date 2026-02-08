@@ -593,6 +593,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &998280293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 998280295}
+  - component: {fileID: 998280294}
+  m_Layer: 0
+  m_Name: GameManger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &998280294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998280293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9b2f6d4280a744481ec342525251a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  startingMoney: 650
+  startingLives: 100
+  OnMoneyChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLivesChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWaveChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameSpeedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPauseStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &998280295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998280293}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.29391, y: 384.2636, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1157459841
 GameObject:
   m_ObjectHideFlags: 0
@@ -12218,9 +12282,9 @@ RectTransform:
   - {fileID: 7601830454882531420}
   m_Father: {fileID: 4854249410185019960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -399.49997}
   m_SizeDelta: {x: 680, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1092089320743685204
@@ -12649,19 +12713,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5458426328481233536}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5851446308957012745}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: PlayGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1813009680988897561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13502,19 +13554,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1646804499852439674}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5851446308957012745}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: QuitGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3191462593424532168
 GameObject:
   m_ObjectHideFlags: 0
@@ -14341,7 +14381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4525296646993556262
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15114,6 +15154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5356570071151972359}
   - component: {fileID: 5851446308957012745}
+  - component: {fileID: 5851446308957012746}
   m_Layer: 0
   m_Name: MainMenuUI
   m_TagString: Untagged
@@ -15300,6 +15341,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4db83c8566d03347b0e586b228411a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayButton: {fileID: 1796269348224669550}
+  QuitButton: {fileID: 3185221722376080436}
+--- !u!114 &5851446308957012746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295906857378548682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1de3f538839e79447b23ce00f4202ef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  buttonClickSound: {fileID: 8300000, guid: 522d98107b757ec4aa970b0af3722755, type: 3}
+  buttonDisabledSound: {fileID: 8300000, guid: b51f2f0533a1b514a8ee5d0c3fd2723e, type: 3}
+  towerSelectedSound: {fileID: 0}
+  enemyDeathSound: {fileID: 0}
+  towerUpgradeSound: {fileID: 0}
+  towerPlaceSound: {fileID: 0}
 --- !u!222 &5858401469663432086
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17288,3 +17349,4 @@ SceneRoots:
   - {fileID: 227356993}
   - {fileID: 1192509088}
   - {fileID: 1594861728}
+  - {fileID: 998280295}

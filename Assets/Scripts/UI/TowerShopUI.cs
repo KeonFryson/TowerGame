@@ -130,6 +130,7 @@ public class TowerShopUI : MonoBehaviour
         {
             if (towerPlacement != null)
             {
+                AudioManager.Instance.PlayButtonClick();
                 towerPlacement.StartPlacingTower(towerPrefab, cost);
             }
         }

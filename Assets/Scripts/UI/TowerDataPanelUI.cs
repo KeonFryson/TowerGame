@@ -23,7 +23,7 @@ public class TowerDataPanelUI : MonoBehaviour
         // Setup Sell button
         if (SellButton != null)
         {
-            SellButton.onClick.AddListener(OnSellButtonPressed);
+            SellButton.onClick.AddListener(OnSellButtonPressedWithAudio);
         }
     }
 
@@ -121,12 +121,20 @@ public class TowerDataPanelUI : MonoBehaviour
                 int capturedPath = path;
                 upgradeButton.onClick.AddListener(() =>
                 {
-                    if (GameManager.Instance.GetMoney() >= nextUpgrade.cost)
+                    if (upgradeButton.interactable)
                     {
-                        GameManager.Instance.SpendMoney(nextUpgrade.cost);
-                        tower.ApplyUpgrade(capturedPath);
-                        ToolTip.HideToolTipStatic(); // Hide tooltip after upgrade
-                        ShowTowerData(tower); // Refresh UI
+                        AudioManager.Instance.PlayTowerUpgrade();
+                        if (GameManager.Instance.GetMoney() >= nextUpgrade.cost)
+                        {
+                            GameManager.Instance.SpendMoney(nextUpgrade.cost);
+                            tower.ApplyUpgrade(capturedPath);
+                            ToolTip.HideToolTipStatic(); // Hide tooltip after upgrade
+                            ShowTowerData(tower); // Refresh UI
+                        }
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlayButtonDisabled();
                     }
                 });
 
@@ -149,6 +157,12 @@ public class TowerDataPanelUI : MonoBehaviour
 
                 // Remove tooltip triggers for maxed buttons
                 trigger.triggers.Clear();
+
+                // Add disabled sound for maxed button
+                upgradeButton.onClick.AddListener(() =>
+                {
+                    AudioManager.Instance.PlayButtonDisabled();
+                });
             }
         }
     }
@@ -188,6 +202,23 @@ public class TowerDataPanelUI : MonoBehaviour
         }
 
         return sb.ToString();
+    }
+
+    // Sell button handler with audio
+    public void OnSellButtonPressedWithAudio()
+    {
+        if (SellButton != null)
+        {
+            if (SellButton.interactable)
+            {
+                AudioManager.Instance.PlayButtonClick();
+                OnSellButtonPressed();
+            }
+            else
+            {
+                AudioManager.Instance.PlayButtonDisabled();
+            }
+        }
     }
 
     public void OnSellButtonPressed()

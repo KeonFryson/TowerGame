@@ -19,19 +19,16 @@ public class TowerSelector : MonoBehaviour
 
     private void Update()
     {
-
         if (selectedTower != null)
         {
             selectedTower.UpdateRangeIndicator();
         }
-
 
         // Use new Input System for mouse click
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && !EventSystem.current.IsPointerOverGameObject())
         {
             Vector2 mousePos = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Collider2D hit = Physics2D.OverlapPoint(mousePos, towerLayerMask);
-            
 
             if (hit != null)
             {
@@ -45,6 +42,9 @@ public class TowerSelector : MonoBehaviour
                     // Select new tower
                     selectedTower = tower;
                     selectedTower.ShowRangeIndicator();
+
+                    // Play tower selection sound
+                    AudioManager.Instance.PlayTowerSelected();
 
                     towerDataPanelUI.ShowTowerData(tower);
                     return;
@@ -60,7 +60,7 @@ public class TowerSelector : MonoBehaviour
             towerDataPanelUI.Hide();
         }
 
-        if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame && ! EventSystem.current.IsPointerOverGameObject())
+        if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame && !EventSystem.current.IsPointerOverGameObject())
         {
             if (selectedTower != null)
             {

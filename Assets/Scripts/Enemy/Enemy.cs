@@ -54,6 +54,9 @@ public abstract class Enemy : MonoBehaviour
 
     public string GetDescription() => description;
 
+    // --- State ---
+    private AudioSource audioSource;
+
     // --- Unity Lifecycle ---
     protected virtual void Start()
     {
@@ -70,6 +73,11 @@ public abstract class Enemy : MonoBehaviour
             transform.position = PathManager.Instance.GetWaypoint(0);
             currentNodeIndex = 0;
         }
+
+        // Initialize AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     protected virtual void Update()
@@ -149,6 +157,9 @@ public abstract class Enemy : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
+
+        // Play global enemy death sound
+        AudioManager.Instance.PlayEnemyDeath();
 
         GameManager.Instance?.AddMoney(moneyReward);
         WaveManager.Instance?.OnEnemyDefeated();
