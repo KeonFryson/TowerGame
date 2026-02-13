@@ -67,6 +67,8 @@ public class TowerSelector : MonoBehaviour
                 selectedTower.HideRangeIndicator();
                 selectedTower = null;
             }
+            towerDataPanelUI.Hide();
+
         }
     }
 }

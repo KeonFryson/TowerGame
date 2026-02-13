@@ -16,7 +16,7 @@ TagManager:
   - Placeable
   - Tower
   - Projectile
-  - 
+  - NonPlaceable
   - 
   - 
   - 

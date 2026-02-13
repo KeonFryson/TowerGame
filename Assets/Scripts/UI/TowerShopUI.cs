@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class TowerShopUI : MonoBehaviour
 {
+
+   // public event System.Action OnShopOpened;
+
+
     [System.Serializable]
     public class TowerButton
     {
@@ -173,6 +177,7 @@ public class TowerShopUI : MonoBehaviour
     {
         bool isActive = !TowerShopPanel.activeSelf;
         OpenTowerShop(isActive);
+
     }
 
     private void OpenTowerShop(bool isOpen)

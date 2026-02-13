@@ -5,6 +5,8 @@ using UnityEngine.EventSystems; // Add this for EventTrigger
 
 public class TowerDataPanelUI : MonoBehaviour
 {
+    public event System.Action OnUpgrade;
+
     [Header("UI References")]
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI nameText;
@@ -128,6 +130,7 @@ public class TowerDataPanelUI : MonoBehaviour
                         {
                             GameManager.Instance.SpendMoney(nextUpgrade.cost);
                             tower.ApplyUpgrade(capturedPath);
+                            OnUpgrade?.Invoke();
                             ToolTip.HideToolTipStatic(); // Hide tooltip after upgrade
                             ShowTowerData(tower); // Refresh UI
                         }

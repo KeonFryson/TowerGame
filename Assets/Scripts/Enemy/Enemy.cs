@@ -130,14 +130,16 @@ public abstract class Enemy : MonoBehaviour
         {
             if (damageAmount > armor)
             {
-                armor -= 1;
+                armor -= 2;
                 if (armor < 0) armor = 0;
                 UpdateArmorVisual();
                 Debug.Log($"[Enemy] Damage ({damageAmount}) > armor. Armor reduced by 1. New Armor: {armor}");
             }
             else
             {
-                // Damage is less than or equal to armor, do nothing
+                armor -= 1;
+                if (armor < 0) armor = 1;
+                UpdateArmorVisual();
                 Debug.Log($"[Enemy] Damage ({damageAmount}) <= armor ({armor}). No effect.");
             }
         }

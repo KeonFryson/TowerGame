@@ -13,6 +13,7 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     [SerializeField] private Image nextMapImage;
     [SerializeField] private TMPro.TextMeshProUGUI nextMapNameText;
     [SerializeField] private Button playButton;
+    [SerializeField] private Button TutorialButton;
 
     [System.Serializable]
     public class MapData
@@ -51,6 +52,10 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         {
             playButton.onClick.AddListener(OnPlayButtonClicked);
         }
+        if (TutorialButton != null)
+        {
+            TutorialButton.onClick.AddListener(OnTutorialButtonClicked);
+        }
         dragThreshold = imageSpacing;
 
         UpdateMapDisplay();
@@ -66,9 +71,23 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         }
     }
 
+    private void OnTutorialButtonClicked()
+    {
+        AudioManager.Instance.PlayButtonClick();
+        string tutorialSceneName = "TutorialScene";
+        StartCoroutine(LoadScenceWithName(0.3f, tutorialSceneName));
+    }
+
     private System.Collections.IEnumerator LoadScence(float delay, int sceneIndex)
     {
        
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneIndex);
+    }
+
+    private System.Collections.IEnumerator LoadScenceWithName(float delay, string sceneIndex)
+    {
+
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(sceneIndex);
     }
@@ -238,4 +257,6 @@ public class MapSelectorUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         }
         dragOffset = 0f;
     }
+
+
 }

@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class TowerPlacement : MonoBehaviour
 {
+    public event System.Action OnTowerPlace;
+
     [Header("Placement Settings")]
     [SerializeField] private GameObject towerPrefab;
     [SerializeField] private LayerMask placementLayer;
@@ -204,10 +206,12 @@ public class TowerPlacement : MonoBehaviour
             {
                 var newTowerObj = Instantiate(towerPrefab, placementPos, Quaternion.identity);
                 AudioManager.Instance.PlayTowerPlace();
+
                 Tower newTower = newTowerObj.GetComponent<Tower>();
                 if (newTower != null)
                 {
                     newTower.MarkAsPlaced();
+                    OnTowerPlace?.Invoke();
                 }
             }
             else
